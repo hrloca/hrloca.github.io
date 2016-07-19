@@ -1,0 +1,51 @@
+/*
+ * tab
+ * */
+
+.c-tab {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: -1px;
+  &__item {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    text-align: center;
+    cursor: pointer;
+  }
+  &__text {
+    position: relative;
+    text-align: center;
+    padding-top: 28px;
+    padding-bottom: 32px;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 4px;
+    }
+    &--current {
+      &:after {
+        width: 100%;
+        background-color: var(--accent-color);
+      }
+    }
+  }
+
+  &--type2 {
+    margin-bottom: 0;
+    margin-top: -1px;
+    & .c-tab__text {
+      padding-top: 32px;
+      padding-bottom: 28px;
+      &:after {
+        top: 0;
+        bottom: auto;
+      }
+    }
+  }
+
+}

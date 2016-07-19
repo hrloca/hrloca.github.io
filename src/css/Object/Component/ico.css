@@ -1,0 +1,56 @@
+/*
+ * ico
+ * */
+
+.c-ico {
+  &:after {
+    content: '';
+    display: inline-block;
+    font-size: 1rem;
+    width: 1em;
+    height: 1em;
+    vertical-align: text-bottom;
+    background-size: 1600% 1600%;
+    background-position: 0 0;
+    background-image: url(/img/ico.svg);
+  }
+
+  &-home:after { background-position: 0 0; }
+  &-music:after { background-position: -1em 0; }
+  &-folder:after { background-position: -2em 0; }
+  &-display:after { background-position: -3em 0; }
+  &-camera:after { background-position: -4em 0; }
+  &-play:after { background-position: -5em 0; }
+  &-copy:after { background-position: -6em 0; }
+  &-mobile:after { background-position: -7em 0; }
+  &-arrow:after { background-position: -8em 0; }
+
+  &--size {
+    &-SS:after { font-size: 0.5rem; }
+    &-S:after { font-size: 1rem; }
+    &-M:after { font-size: 2rem; }
+    &-L:after { font-size: 3rem; }
+    &-LL:after { font-size: 4rem; }
+  }
+
+  &--pos-r {
+    position: relative;
+    padding-right: 32px;
+    &:after {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      right: 8px;
+    }
+  }
+
+  &--pos-l {
+    position: relative;
+    &:after {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      left: 8px;
+    }
+  }
+}

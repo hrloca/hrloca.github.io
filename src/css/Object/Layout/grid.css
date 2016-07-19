@@ -1,0 +1,21 @@
+.l-grid {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
+  &--moc {
+    & .l-grid__item {
+      padding: 24px;
+    }
+  }
+
+  &__item {
+    flex: 1;
+    &--liquid { flex: 1; }
+  }
+
+}

@@ -1,0 +1,62 @@
+/*
+ * cell
+ * */
+
+:root {
+  --c-cell-border-color: var(--primary-border-color);
+  --c-cell-margin: 16px;
+}
+
+.c-cell {
+  /* initial state */
+  overflow: hidden;
+  flex: 1;
+  /* default style */
+
+  &__list {
+    /* initial state */
+    margin-top: -1px;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    &:last-child { margin-bottom: -1px; }
+    /* default style */
+  }
+
+  &__area {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+  }
+
+  &__body {
+    /* initial state */
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    /* default style */
+    border-top: 1px solid var(--c-cell-border-color);
+    border-bottom: 1px solid var(--c-cell-border-color);
+    border-left: 1px solid rgba(0, 0, 0, 0);
+  }
+
+  &__item {
+    flex-grow: 1;
+    padding-top: var(--c-cell-margin);
+    padding-bottom: var(--c-cell-margin);
+  }
+
+  /* wrap */
+  &--wrap {
+    border-top: 1px solid var(--c-cell-border-color);
+    border-bottom: 1px solid var(--c-cell-border-color);
+  }
+
+  /* type */
+  &--type-2 {
+    & .c-cell__area {
+      padding-left: 16px;
+    }
+  }
+
+}

@@ -1,0 +1,42 @@
+/*
+ * card
+ * */
+
+.c-card {
+  /* initial state */
+  /* default style */
+
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+
+  &__item {
+    padding: 0 14px;
+    display: flex;
+    flex-direction:  column;
+    flex: 1;
+    &:first-child { padding-left: 0; }
+    &:last-child { padding-right: 0; }
+  }
+
+  &__cap {
+  }
+
+  &__img {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  &__text {
+  }
+
+}
+
+@media (max-width: 450px) {
+  .c-card {
+    flex-direction:  column;
+    &__item {
+      padding: 0;
+    }
+  }
+}

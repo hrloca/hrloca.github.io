@@ -8,7 +8,8 @@ const TARGET = process.env.npm_lifecycle_event
  **************************************************/
 const jsConfig = {
   entry: {
-    app: './src/js/main.js'
+    app: './src/js/main.js',
+    slider: './src/js/slider.js'
   },
   output: {
     path: './dist/js/',
@@ -32,7 +33,10 @@ const jsConfig = {
  **************************************************/
 const cssConfig = {
   entry: {
-    app: `./src/css/style.css`
+    app: `./src/css/app.css`,
+    style: `./src/css/style.css`,
+    slider: `./src/css/slider.css`,
+    flexbox: `./src/css/flexbox.css`,
   },
   output: {
     path: `./dist/css/`,

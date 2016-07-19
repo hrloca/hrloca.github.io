@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "npm run watch & npm run serve",
     "build": "webpack -d --progress --colors",
-    "serve": "browser-sync start --server './'  --files='./dist/js/**/*.js, ./dist/css/**/*.css, ./index.html'",
+    "serve": "browser-sync start --server './' --serveStatic './dist'  --files='./dist/js/**/*.js, ./dist/css/**/*.css, ./*.html'",
     "watch": "webpack -d --progress --colors --watch"
   },
   "keywords": [],

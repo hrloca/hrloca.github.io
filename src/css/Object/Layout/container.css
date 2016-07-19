@@ -1,0 +1,10 @@
+/*
+ * container
+ * */
+
+.l-container {
+  &--solid {
+    max-width: var(--content-single-width);
+    margin: 0 auto;
+  }
+}

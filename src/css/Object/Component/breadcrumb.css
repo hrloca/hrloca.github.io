@@ -1,0 +1,39 @@
+/*
+ * breadcrumb
+ * */
+
+.c-breadcrumb {
+  margin: 10px 0 8px;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  &__list {
+    line-height: 1;
+    font-size: 11px;
+    line-height: 11px;
+    color: var(--disabled-color);
+    padding-right: 8px;
+    &:before {
+      line-height: 10px;
+      height: 10px;
+      font-size: 10px;
+      color: #ccc;
+      content: '>';
+      padding-right: 8px;
+    }
+    &:first-child {
+      &:before {
+        content: '';
+        padding-right: 0;
+      }
+    }
+    &:last-child {
+      color: var(--text-color);
+    }
+  }
+  &--current {
+    color: var(--text-color);
+  }
+}

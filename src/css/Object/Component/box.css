@@ -1,0 +1,10 @@
+/*
+ * box
+ * */
+
+.c-box {
+  background-color: #F0F0F0;
+  &__body {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,23 @@
+/*
+ * btn
+ * */
+
+.c-btn {
+  /* initial state */
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  cursor: pointer;
+  line-height: 1;
+
+  /* default style */
+  border: 1px solid #000;
+  background-color: #fff;
+  max-width: 194px;
+  padding: 10px;
+  font-weight: bold;
+  text-decoration: none;
+}
