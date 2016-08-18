@@ -34,7 +34,6 @@ const jsConfig = {
 const cssConfig = {
   entry: {
     app: `./src/css/app.css`,
-    style: `./src/css/style.css`,
     slider: `./src/css/slider.css`,
     flexbox: `./src/css/flexbox.css`,
   },
