@@ -12,7 +12,7 @@
     vertical-align: text-bottom;
     background-size: 1600% 1600%;
     background-position: 0 0;
-    background-image: url(/img/ico.svg);
+    background-image: url(/dist/img/ico.svg);
   }
 
   &-home:after { background-position: 0 0; }
