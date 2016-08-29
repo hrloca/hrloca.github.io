@@ -147,6 +147,16 @@ section {
   &-auto { flex-basis: auto; }
 }
 
+.align-self {
+  height: 120px;
+  flex-wrap: nowrap;
+  &-flex-start { align-self: flex-start; }
+  &-flex-end { align-self: flex-end; }
+  &-center { align-self: center; }
+  &-baseline { align-self: baseline; }
+  &-stretch { align-self: stretch; }
+}
+
 .order {
   &-0 { order: 0; }
   &-1 { order: 1; }
