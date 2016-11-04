@@ -1,0 +1,10 @@
+.t-paragraph {
+  &-M {
+    line-height: 2;
+    margin-bottom: 8px;
+  }
+  &-S {
+    line-height: 1.68;
+    font-size: var(--font-size-S);
+  }
+}

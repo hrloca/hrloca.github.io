@@ -6,13 +6,15 @@
 }
 
 html {
-  overflow: hidden;
 }
 
 body{
   font-family: var(--base-font-family);
   color: var(--text-color);
-  font-size: 14px;
+  font-size: var(--font-size-M);
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 a {
@@ -26,9 +28,4 @@ input,input:focus {
 ul, li{
   list-style-type: none;
 }
-
-p {
-  line-height: 2;
-}
-
 

@@ -1,6 +1,0 @@
-.u-color {
-  &--base { color: var(--text-color); }
-  &--secondary { color: var(--secondary-text-color); }
-  &--disabled { color: var(--disabled-color); }
-  &--accent { color: var(--accent-color); }
-}

@@ -1,0 +1,8 @@
+.t-size {
+  &-XS { font-size: var(--font-size-XS); }
+  &-S { font-size: var(--font-size-S); }
+  &-M { font-size: var(--font-size-M); }
+  &-L { font-size: var(--font-size-L); }
+  &-XL { font-size: var(--font-size-XL); }
+  &-XXL { font-size: var(--font-size-XXL); }
+}

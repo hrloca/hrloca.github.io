@@ -1,0 +1,25 @@
+.ui-toggle {
+
+  &__btn.is-open{
+
+    &:before{
+      transform: rotate(180deg);
+      transform-origin: center center;
+      top: 25%;
+    }
+  }
+
+  &__area{
+    overflow: hidden;
+    height: 0;
+    transition: height 0.3s ease;
+
+    &__body{
+      &:before{
+        content: '';
+        display: block;
+        height: 1px;
+      }
+   }
+  }
+}

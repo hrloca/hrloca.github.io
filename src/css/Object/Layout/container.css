@@ -4,7 +4,11 @@
 
 .l-container {
   &--solid {
-    max-width: var(--content-single-width);
+    width: var(--content-single-width);
     margin: 0 auto;
+    flex-shrink: 0;
+    &.--size-S {
+      width: 700px;
+    }
   }
 }

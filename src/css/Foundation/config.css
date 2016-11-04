@@ -4,41 +4,61 @@
 
 /* font */
 :root {
-  --base-font-family: sans-serif;
+  --base-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', '游ゴシック Medium', 'メイリオ', meiryo, sans-serif;
 }
 
 /* color */
 :root {
-  --base-color: #000;
-  --text-color: #000;
-  --secondary-text-color: #888;
-  --accent-color: #e41f35;
+  --base-color: #666;
+  --text-color: #666;
+  --secondary-text-color: #ccc;
+  --accent-color: #f48;
   --hint-text-color : #e41f35;
-  --disabled-color: #aaa;
-  --dividers: #e0e0e0;
-  --primary-color: #e41f35;
+  --disabled-color: #ddd;
+  --dividers: #ccc;
+  --thin-dividers: #eee;
+  --primary-color: #48f;
   --primary-color-in-text-color: #fff;
+
+  --panel-primary-color: #F0F0F0;
+  --aside-color: #f0ede8;
+  --share-color: #f9f7f3;
 }
 
 /* client */
 :root {
   --primary-client-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
-  --primary-border-color: #ccc;
-  --content-width: 801px;
-  --content-single-width: 1000px;
+  --primary-border-color: var(--dividers);
+  --content-width: 828px;
+  --content-single-width: 980px;
   --article-content-width: 810px;
   --header-height: 72px;
 }
 
-/* font size */
+/* shadow */
 :root {
-  --font-size-SS: 0.625rem;
-  --font-size-S: 0.75rem;
-  --font-size-M: 1rem;
-  --font-size-L: 1.125rem;
-  --font-size-LL: 1.375rem;
+  --shadow-S: 0px 0px 2px 1px rgba(50, 50, 50, 0.2);
+  --shadow-M: 0px 0px 4px 2px rgba(50, 50, 50, 0.2);
+  --shadow-L: 0px 0px 6px 3px rgba(50, 50, 50, 0.2);
 }
 
+/* font */
+:root {
+  --font-size-XS: 0.625rem; /* 10 */
+  --font-size-S: 0.75rem; /* 12 */
+  --font-size-M: 0.875rem; /* 14 */
+  --font-size-L: 1rem; /* 16 */
+  --font-size-XL: 1.25rem; /* 20 */
+  --font-size-XXL: 1.5rem; /* 24 */
+}
+
+/* image */
+:root {
+  --img-size-XS: 120px;
+  --img-size-S: 140px;
+  --img-size-M: 244px;
+  --img-size-L: 308px;
+}
 
 /* easing */
 :root {
@@ -46,5 +66,3 @@
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-
-

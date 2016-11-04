@@ -1,0 +1,46 @@
+.l-space {
+
+  &-XXS { margin-bottom: 4px; margin-top: 4px; }
+  &-XS { margin-bottom: 8px; margin-top: 8px; }
+  &-S { margin-bottom: 16px; margin-top: 16px; }
+  &-M { margin-bottom: 24px; margin-top: 24px; }
+  &-L { margin-bottom: 32px; margin-top: 32px; }
+  &-XL { margin-bottom: 40px; margin-top: 40px; }
+
+  &-t {
+    &-nXXS { margin-top: -4px; }
+    &-nXS { margin-top: -8px; }
+    &-XXS { margin-top: 4px; }
+    &-XS { margin-top: 8px; }
+    &-S { margin-top: 16px; }
+    &-M { margin-top: 24px; }
+    &-L { margin-top: 32px; }
+    &-XL { margin-top: 40px; }
+  }
+  &-b {
+    &-n { margin-bottom: 0; }
+    &-XXS { margin-bottom: 4px; }
+    &-XS { margin-bottom: 8px; }
+    &-S { margin-bottom: 16px; }
+    &-M { margin-bottom: 24px; }
+    &-L { margin-bottom: 32px; }
+    &-XL { margin-bottom: 40px; }
+    &-XXL { margin-bottom: 80px;}
+  }
+  &-l {
+    &-XXS { margin-left: 4px; }
+    &-XS { margin-left: 8px; }
+    &-S { margin-left: 16px; }
+    &-M { margin-left: 24px; }
+    &-L { margin-left: 32px; }
+    &-XL { margin-left: 40px; }
+  }
+  &-r {
+    &-XXS { margin-right: 4px; }
+    &-XS { margin-right: 8px; }
+    &-S { margin-right: 16px; }
+    &-M { margin-right: 24px; }
+    &-L { margin-right: 32px; }
+    &-XL { margin-right: 40px; }
+  }
+}

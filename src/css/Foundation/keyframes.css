@@ -3,9 +3,35 @@
  * ----------------------------------------------------------------- */
 
 @keyframes SHOW {
-  0% { opacity: 0; visibility: hidden; }
-  100% { opacity: 1; visibility: visible; }
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    display: auto;
+  }
 }
 
-@keyframes HOGE {
+@keyframes HIDE {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    display: auto;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+  }
 }
+
+
+@keyframes ROTATE_R {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+

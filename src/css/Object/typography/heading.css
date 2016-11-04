@@ -1,0 +1,15 @@
+.t-h{
+  &1 {
+    font-weight: bold;
+    font-size: var(--font-size-XXL);
+  }
+  &2 {
+    font-size: var(--font-size-L);
+    font-weight: bold;
+  }
+  &3 {
+    font-size: var(--font-size-M);
+    font-weight: bold;
+  }
+}
+
