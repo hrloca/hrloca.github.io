@@ -70,13 +70,63 @@
 	  value: true
 	});
 	
+	var _store = __webpack_require__(/*! ./store */ 2);
+	
+	var _view = __webpack_require__(/*! ./view */ 25);
+	
+	var _view2 = _interopRequireDefault(_view);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function () {
+	  (0, _store.init_board)();
+	  (0, _store.select_block)();
+	  (0, _view2.default)();
+	};
+	
+	var rotateRBtn = document.getElementById('r');
+	var rotateLBtn = document.getElementById('l');
+	var leftBtn = document.getElementById('left');
+	var rightBtn = document.getElementById('right');
+	var downBtn = document.getElementById('down');
+	
+	leftBtn.addEventListener('click', function () {
+	  (0, _store.move)(-1, 0);
+	});
+	rightBtn.addEventListener('click', function () {
+	  (0, _store.move)(1, 0);
+	});
+	downBtn.addEventListener('click', function () {
+	  (0, _store.move)(0, 1);
+	});
+	rotateLBtn.addEventListener('click', function () {
+	  (0, _store.rotate)(-1);
+	});
+	rotateRBtn.addEventListener('click', function () {
+	  (0, _store.rotate)(1);
+	});
+
+/***/ },
+/* 2 */
+/*!********************************!*\
+  !*** ./src/js/tetris/store.js ***!
+  \********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.transmit = exports.move = exports.rotate = exports.select_block = exports.init_board = undefined;
+	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
-	var _immutable = __webpack_require__(/*! immutable */ 2);
+	var _immutable = __webpack_require__(/*! immutable */ 3);
 	
 	var _immutable2 = _interopRequireDefault(_immutable);
 	
-	var _redux = __webpack_require__(/*! redux */ 3);
+	var _redux = __webpack_require__(/*! redux */ 4);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -296,61 +346,41 @@
 	
 	// action //////////////////////////////////////////////////////
 	
-	var init_board = function init_board() {
+	var init_board = exports.init_board = function init_board() {
 	  return store.dispatch({ type: 'init_board' });
 	};
-	var select_block = function select_block() {
+	var select_block = exports.select_block = function select_block() {
 	  return store.dispatch({ type: 'select_block' });
 	};
 	
-	var rotate = function rotate(dir) {
+	var rotate = exports.rotate = function rotate(dir) {
 	  return store.dispatch({ type: 'rotate', dir: dir });
 	};
-	var move = function move(x, y) {
+	var move = exports.move = function move(x, y) {
 	  return store.dispatch({ type: 'move', x: x, y: y });
 	};
 	
-	// main //////////////////////////////////////////////////////
+	// subscribe //////////////////////////////////////////////////////
+	var transmit = exports.transmit = function transmit() {
+	  var cb = arguments.length <= 0 || arguments[0] === undefined ? function () {
+	    return null;
+	  } : arguments[0];
 	
-	exports.default = function () {
-	  init_board();
-	  select_block();
+	  storeSubscribePool.push(cb);
 	};
-	
+	var storeSubscribePool = [];
 	store.subscribe(function () {
-	  var block = store.getState().block;
-	  block.body.forEach(function (v) {
-	    return console.log(v);
+	  var state = store.getState();
+	  var block = state.block;
+	  // block.body.forEach(v => console.log(v))
+	  // console.log(`POS:(${block.X},${block.Y})`)
+	  storeSubscribePool.forEach(function (cb) {
+	    return cb(state);
 	  });
-	  console.log('POS:(' + block.X + ',' + block.Y + ')');
-	});
-	
-	// view //////////////////////////////////////////////////////
-	
-	var rotateRBtn = document.getElementById('r');
-	var rotateLBtn = document.getElementById('l');
-	var leftBtn = document.getElementById('left');
-	var rightBtn = document.getElementById('right');
-	var downBtn = document.getElementById('down');
-	
-	leftBtn.addEventListener('click', function () {
-	  move(-1, 0);
-	});
-	rightBtn.addEventListener('click', function () {
-	  move(1, 0);
-	});
-	downBtn.addEventListener('click', function () {
-	  move(0, 1);
-	});
-	rotateLBtn.addEventListener('click', function () {
-	  rotate(-1);
-	});
-	rotateRBtn.addEventListener('click', function () {
-	  rotate(1);
 	});
 
 /***/ },
-/* 2 */
+/* 3 */
 /*!***************************************!*\
   !*** ./~/immutable/dist/immutable.js ***!
   \***************************************/
@@ -5337,7 +5367,7 @@
 	}));
 
 /***/ },
-/* 3 */
+/* 4 */
 /*!******************************!*\
   !*** ./~/redux/lib/index.js ***!
   \******************************/
@@ -5348,27 +5378,27 @@
 	exports.__esModule = true;
 	exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
 	
-	var _createStore = __webpack_require__(/*! ./createStore */ 4);
+	var _createStore = __webpack_require__(/*! ./createStore */ 5);
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
-	var _combineReducers = __webpack_require__(/*! ./combineReducers */ 19);
+	var _combineReducers = __webpack_require__(/*! ./combineReducers */ 20);
 	
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 	
-	var _bindActionCreators = __webpack_require__(/*! ./bindActionCreators */ 21);
+	var _bindActionCreators = __webpack_require__(/*! ./bindActionCreators */ 22);
 	
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 	
-	var _applyMiddleware = __webpack_require__(/*! ./applyMiddleware */ 22);
+	var _applyMiddleware = __webpack_require__(/*! ./applyMiddleware */ 23);
 	
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 	
-	var _compose = __webpack_require__(/*! ./compose */ 23);
+	var _compose = __webpack_require__(/*! ./compose */ 24);
 	
 	var _compose2 = _interopRequireDefault(_compose);
 	
-	var _warning = __webpack_require__(/*! ./utils/warning */ 20);
+	var _warning = __webpack_require__(/*! ./utils/warning */ 21);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -5391,7 +5421,7 @@
 	exports.compose = _compose2['default'];
 
 /***/ },
-/* 4 */
+/* 5 */
 /*!************************************!*\
   !*** ./~/redux/lib/createStore.js ***!
   \************************************/
@@ -5403,11 +5433,11 @@
 	exports.ActionTypes = undefined;
 	exports['default'] = createStore;
 	
-	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 5);
+	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 6);
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _symbolObservable = __webpack_require__(/*! symbol-observable */ 15);
+	var _symbolObservable = __webpack_require__(/*! symbol-observable */ 16);
 	
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 	
@@ -5660,15 +5690,15 @@
 	}
 
 /***/ },
-/* 5 */
+/* 6 */
 /*!***********************************!*\
   !*** ./~/lodash/isPlainObject.js ***!
   \***********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 6),
-	    getPrototype = __webpack_require__(/*! ./_getPrototype */ 12),
-	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 14);
+	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 7),
+	    getPrototype = __webpack_require__(/*! ./_getPrototype */ 13),
+	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 15);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -5731,15 +5761,15 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /*!*********************************!*\
   !*** ./~/lodash/_baseGetTag.js ***!
   \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(/*! ./_Symbol */ 7),
-	    getRawTag = __webpack_require__(/*! ./_getRawTag */ 10),
-	    objectToString = __webpack_require__(/*! ./_objectToString */ 11);
+	var Symbol = __webpack_require__(/*! ./_Symbol */ 8),
+	    getRawTag = __webpack_require__(/*! ./_getRawTag */ 11),
+	    objectToString = __webpack_require__(/*! ./_objectToString */ 12);
 	
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -5769,13 +5799,13 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /*!*****************************!*\
   !*** ./~/lodash/_Symbol.js ***!
   \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var root = __webpack_require__(/*! ./_root */ 8);
+	var root = __webpack_require__(/*! ./_root */ 9);
 	
 	/** Built-in value references. */
 	var Symbol = root.Symbol;
@@ -5784,13 +5814,13 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /*!***************************!*\
   !*** ./~/lodash/_root.js ***!
   \***************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ 9);
+	var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ 10);
 	
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -5802,7 +5832,7 @@
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /*!*********************************!*\
   !*** ./~/lodash/_freeGlobal.js ***!
   \*********************************/
@@ -5816,13 +5846,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 10 */
+/* 11 */
 /*!********************************!*\
   !*** ./~/lodash/_getRawTag.js ***!
   \********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(/*! ./_Symbol */ 7);
+	var Symbol = __webpack_require__(/*! ./_Symbol */ 8);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -5871,7 +5901,7 @@
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /*!*************************************!*\
   !*** ./~/lodash/_objectToString.js ***!
   \*************************************/
@@ -5902,13 +5932,13 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /*!***********************************!*\
   !*** ./~/lodash/_getPrototype.js ***!
   \***********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(/*! ./_overArg */ 13);
+	var overArg = __webpack_require__(/*! ./_overArg */ 14);
 	
 	/** Built-in value references. */
 	var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -5917,7 +5947,7 @@
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /*!******************************!*\
   !*** ./~/lodash/_overArg.js ***!
   \******************************/
@@ -5941,7 +5971,7 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /*!**********************************!*\
   !*** ./~/lodash/isObjectLike.js ***!
   \**********************************/
@@ -5979,17 +6009,17 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /*!**************************************!*\
   !*** ./~/symbol-observable/index.js ***!
   \**************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./lib/index */ 16);
+	module.exports = __webpack_require__(/*! ./lib/index */ 17);
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /*!******************************************!*\
   !*** ./~/symbol-observable/lib/index.js ***!
   \******************************************/
@@ -6001,7 +6031,7 @@
 	  value: true
 	});
 	
-	var _ponyfill = __webpack_require__(/*! ./ponyfill */ 18);
+	var _ponyfill = __webpack_require__(/*! ./ponyfill */ 19);
 	
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 	
@@ -6024,10 +6054,10 @@
 	
 	var result = (0, _ponyfill2['default'])(root);
 	exports['default'] = result;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./../../webpack/buildin/module.js */ 17)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./../../webpack/buildin/module.js */ 18)(module)))
 
 /***/ },
-/* 17 */
+/* 18 */
 /*!***********************************!*\
   !*** (webpack)/buildin/module.js ***!
   \***********************************/
@@ -6046,7 +6076,7 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /*!*********************************************!*\
   !*** ./~/symbol-observable/lib/ponyfill.js ***!
   \*********************************************/
@@ -6077,7 +6107,7 @@
 	};
 
 /***/ },
-/* 19 */
+/* 20 */
 /*!****************************************!*\
   !*** ./~/redux/lib/combineReducers.js ***!
   \****************************************/
@@ -6088,13 +6118,13 @@
 	exports.__esModule = true;
 	exports['default'] = combineReducers;
 	
-	var _createStore = __webpack_require__(/*! ./createStore */ 4);
+	var _createStore = __webpack_require__(/*! ./createStore */ 5);
 	
-	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 5);
+	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 6);
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _warning = __webpack_require__(/*! ./utils/warning */ 20);
+	var _warning = __webpack_require__(/*! ./utils/warning */ 21);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -6227,7 +6257,7 @@
 	}
 
 /***/ },
-/* 20 */
+/* 21 */
 /*!**************************************!*\
   !*** ./~/redux/lib/utils/warning.js ***!
   \**************************************/
@@ -6260,7 +6290,7 @@
 	}
 
 /***/ },
-/* 21 */
+/* 22 */
 /*!*******************************************!*\
   !*** ./~/redux/lib/bindActionCreators.js ***!
   \*******************************************/
@@ -6319,7 +6349,7 @@
 	}
 
 /***/ },
-/* 22 */
+/* 23 */
 /*!****************************************!*\
   !*** ./~/redux/lib/applyMiddleware.js ***!
   \****************************************/
@@ -6333,7 +6363,7 @@
 	
 	exports['default'] = applyMiddleware;
 	
-	var _compose = __webpack_require__(/*! ./compose */ 23);
+	var _compose = __webpack_require__(/*! ./compose */ 24);
 	
 	var _compose2 = _interopRequireDefault(_compose);
 	
@@ -6385,7 +6415,7 @@
 	}
 
 /***/ },
-/* 23 */
+/* 24 */
 /*!********************************!*\
   !*** ./~/redux/lib/compose.js ***!
   \********************************/
@@ -6429,6 +6459,108 @@
 	    }, last.apply(undefined, arguments));
 	  };
 	}
+
+/***/ },
+/* 25 */
+/*!*******************************!*\
+  !*** ./src/js/tetris/view.js ***!
+  \*******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _resize2 = __webpack_require__(/*! ./../util/resize */ 26);
+	
+	var win = window;
+	var doc = document;
+	var raf = win.requestAnimationFrame;
+	var ratio = win.devicePixelRatio;
+	var canvas = doc.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+	
+	var grid = {
+	  size: 32
+	};
+	
+	var board = {
+	  w: grid.size * 10,
+	  h: grid.size * 20
+	};
+	
+	var drowBoard = function drowBoard() {
+	  var wSize = (0, _resize2.size)();
+	  var point = [wSize.w / 2 - board.w / 2, wSize.h / 2 - board.h / 2, board.w, board.h];
+	  ctx.strokeStyle = '#ddd';
+	  ctx.strokeRect.apply(ctx, point);
+	  ctx.fillStyle = '#fff';
+	  ctx.fillRect.apply(ctx, point);
+	};
+	
+	var drowBackground = function drowBackground(w, h) {
+	  ctx.fillStyle = '#f9f9f9';
+	  ctx.fillRect(0, 0, w, h);
+	};
+	
+	exports.default = function () {
+	  var wSize = (0, _resize2.size)();
+	  var w = wSize.w;
+	  var h = wSize.h;
+	  initialCanvasSize(w, h);
+	  drowBackground(w, h);
+	  drowBoard(w, h);
+	};
+	
+	(0, _resize2.resize)(function (e, w, h) {
+	  var wSize = (0, _resize2.size)();
+	  initialCanvasSize(w, h);
+	  drowBackground(w, h);
+	  drowBoard(w, h);
+	});
+	
+	var initialCanvasSize = function initialCanvasSize(w, h) {
+	  canvas.width = w * ratio;
+	  canvas.height = h * ratio;
+	  canvas.style.width = w + 'px';
+	  canvas.style.height = h + 'px';
+	  ctx.scale(ratio, ratio);
+	};
+
+/***/ },
+/* 26 */
+/*!*******************************!*\
+  !*** ./src/js/util/resize.js ***!
+  \*******************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var win = window;
+	
+	var resizeHandler = [];
+	
+	var resize = exports.resize = function resize(handler) {
+	  return resizeHandler.push(handler) - 1;
+	};
+	
+	var size = exports.size = function size() {
+	  var w = win.innerWidth;
+	  var h = win.innerHeight;
+	  return { w: w, h: h };
+	};
+	
+	window.addEventListener('resize', function (e) {
+	  var wSize = size();
+	  resizeHandler.forEach(function (handler) {
+	    return handler(e, wSize.w, wSize.h);
+	  });
+	});
 
 /***/ }
 /******/ ]);

@@ -45,3 +45,6 @@
 
 /* Object/State */
 @import "Object/State";
+
+/* Project */
+@import "Project/tetris";
