@@ -6475,6 +6475,8 @@
 	
 	var _resize2 = __webpack_require__(/*! ./../util/resize */ 26);
 	
+	var _Mono = __webpack_require__(/*! ./Mono */ 27);
+	
 	var win = window;
 	var doc = document;
 	var raf = win.requestAnimationFrame;
@@ -6561,6 +6563,85 @@
 	    return handler(e, wSize.w, wSize.h);
 	  });
 	});
+
+/***/ },
+/* 27 */
+/*!*******************************!*\
+  !*** ./src/js/tetris/Mono.js ***!
+  \*******************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var win = window;
+	var doc = document;
+	var canvas = doc.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+	var raf = win.requestAnimationFrame;
+	var interval = win.setInterval;
+	var ratio = win.devicePixelRatio;
+	
+	//////////////////////////////////////////////////
+	
+	var Mono = exports.Mono = function Mono() {
+	  _classCallCheck(this, Mono);
+	
+	  this.Point;
+	  this.Size;
+	};
+	
+	//////////////////////////////////////////////////
+	
+	
+	var View = exports.View = function () {
+	  function View() {
+	    _classCallCheck(this, View);
+	
+	    this.awake();
+	    // 初期化処理
+	    this.start();
+	    this.ID = updatePool.push(this.update.bind(this));
+	    updatePool.push(this.lateUpdate.bind(this));
+	  }
+	
+	  _createClass(View, [{
+	    key: 'awake',
+	    value: function awake() {}
+	  }, {
+	    key: 'start',
+	    value: function start() {}
+	  }, {
+	    key: 'update',
+	    value: function update() {}
+	  }, {
+	    key: 'lateUpdate',
+	    value: function lateUpdate() {}
+	  }]);
+	
+	  return View;
+	}();
+	
+	var updatePool = [];
+	var lateUpdatePool = [];
+	
+	var update = function update() {
+	  for (var i = 0; i < updatePool.length; ++i) {
+	    updatePool[i]();
+	  }
+	  for (var _i = 0; _i < lateUpdatePool.length; ++_i) {
+	    lateUpdatePool[_i]();
+	  }
+	  raf(update);
+	};
+	raf(update);
 
 /***/ }
 /******/ ]);

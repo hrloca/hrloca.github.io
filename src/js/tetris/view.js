@@ -1,4 +1,5 @@
 import { resize as _resize, size as _size } from './../util/resize'
+import { Mono } from './Mono'
 
 const win = window
 const doc = document
