@@ -1,5 +1,15 @@
 import { resize as _resize, size as _size } from './../util/resize'
-import { Mono } from './Mono'
+import { Mono, View } from './Mono'
+
+class Screen extends View {
+  constructor(props) {
+    super(props)
+  }
+  update() {
+  }
+}
+
+new Screen()
 
 const win = window
 const doc = document

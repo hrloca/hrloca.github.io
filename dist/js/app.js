@@ -6473,9 +6473,36 @@
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _resize2 = __webpack_require__(/*! ./../util/resize */ 26);
 	
 	var _Mono = __webpack_require__(/*! ./Mono */ 27);
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Screen = function (_View) {
+	  _inherits(Screen, _View);
+	
+	  function Screen(props) {
+	    _classCallCheck(this, Screen);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Screen).call(this, props));
+	  }
+	
+	  _createClass(Screen, [{
+	    key: 'update',
+	    value: function update() {}
+	  }]);
+	
+	  return Screen;
+	}(_Mono.View);
+	
+	new Screen();
 	
 	var win = window;
 	var doc = document;
@@ -6569,15 +6596,22 @@
 /*!*******************************!*\
   !*** ./src/js/tetris/Mono.js ***!
   \*******************************/
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.Mono = exports.View = exports.Size = exports.Point = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _resize2 = __webpack_require__(/*! ./../util/resize */ 26);
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -6591,25 +6625,46 @@
 	
 	//////////////////////////////////////////////////
 	
-	var Mono = exports.Mono = function Mono() {
-	  _classCallCheck(this, Mono);
+	var Point = exports.Point = function Point(x, y) {
+	  _classCallCheck(this, Point);
 	
-	  this.Point;
-	  this.Size;
+	  this.x = x;
+	  this.y = y;
 	};
 	
 	//////////////////////////////////////////////////
+	
+	
+	var Size = exports.Size = function Size(w, h) {
+	  _classCallCheck(this, Size);
+	
+	  this.w = w;
+	  this.h = h;
+	};
+	
+	//////////////////////////////////////////////////
+	/*
+	 * awake()
+	 * start()
+	 * update()
+	 * lateUpdate()
+	 * */
 	
 	
 	var View = exports.View = function () {
 	  function View() {
 	    _classCallCheck(this, View);
 	
+	    this.pixelRatio = ratio;
+	    this.size; // Size
+	    this.center; // Point
+	
 	    this.awake();
 	    // 初期化処理
 	    this.start();
-	    this.ID = updatePool.push(this.update.bind(this));
-	    updatePool.push(this.lateUpdate.bind(this));
+	    this.resize && (0, _resize2.resize)(this.resize);
+	    this.update && framePool.push(this.update.bind(this));
+	    this.lateUpdate && lateframePool.push(this.lateUpdate.bind(this));
 	  }
 	
 	  _createClass(View, [{
@@ -6618,30 +6673,39 @@
 	  }, {
 	    key: 'start',
 	    value: function start() {}
-	  }, {
-	    key: 'update',
-	    value: function update() {}
-	  }, {
-	    key: 'lateUpdate',
-	    value: function lateUpdate() {}
 	  }]);
 	
 	  return View;
 	}();
 	
-	var updatePool = [];
-	var lateUpdatePool = [];
-	
-	var update = function update() {
-	  for (var i = 0; i < updatePool.length; ++i) {
-	    updatePool[i]();
+	var framePool = [];
+	var lateframePool = [];
+	var frame = function frame() {
+	  for (var i = 0; i < framePool.length; ++i) {
+	    framePool[i]();
 	  }
-	  for (var _i = 0; _i < lateUpdatePool.length; ++_i) {
-	    lateUpdatePool[_i]();
+	  for (var _i = 0; _i < lateframePool.length; ++_i) {
+	    lateframePool[_i]();
 	  }
-	  raf(update);
+	  raf(frame);
 	};
-	raf(update);
+	raf(frame);
+	
+	//////////////////////////////////////////////////
+	
+	var Item = function (_View) {
+	  _inherits(Item, _View);
+	
+	  function Item(props) {
+	    _classCallCheck(this, Item);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Item).call(this, props));
+	  }
+	
+	  return Item;
+	}(View);
+	
+	var Mono = exports.Mono = { Item: Item };
 
 /***/ }
 /******/ ]);
