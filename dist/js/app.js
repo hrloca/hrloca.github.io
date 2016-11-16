@@ -6484,24 +6484,24 @@
 	});
 	
 	var maru = new _Mono.Circle({
-	  fillColor: '#fdd',
+	  fillColor: '#fee',
+	  strokeColor: '#ddd',
 	  radius: 64,
 	  center: new _Mono.Point(500, 700)
 	});
 	
-	_Mono.view.drow(background);
-	_Mono.view.drow(mono);
-	_Mono.view.drow(maru);
-	
 	mono.update = function () {
-	  this.bounds = new _Mono.Rectangle(new _Mono.Point(this.bounds.point.x + 0.1, this.bounds.point.y + 0.1), new _Mono.Size(this.bounds.size.w + 0.1, this.bounds.size.h - 0.1));
+	  this.bounds = new _Mono.Rectangle(new _Mono.Point(this.bounds.point.x + 0.2, this.bounds.point.y + 0.2), new _Mono.Size(this.bounds.size.w + 0.2, this.bounds.size.h - 0.2));
 	};
 	
 	maru.update = function () {
-	  this.radius = this.radius + 0.1;
-	  this.center = new _Mono.Point(this.center.x - 0.1, this.center.y - 0.1);
+	  this.radius = this.radius + 0.2;
+	  this.center = new _Mono.Point(this.center.x - 0.2, this.center.y - 0.2);
 	};
 	
+	_Mono.view.drow(background);
+	_Mono.view.drow(mono);
+	_Mono.view.drow(maru);
 	_Mono.view.onResize = function () {
 	  background.bounds = new _Mono.Rectangle(new _Mono.Point(0, 0), new _Mono.Size((0, _resize.size)().w, (0, _resize.size)().h));
 	};
@@ -6752,10 +6752,10 @@
 	      _view.ctx.strokeStyle = this.strokeColor;
 	      _view.ctx.fillStyle = this.fillColor;
 	
-	      _view.ctx.shadowColor = this.shadowColor;
-	      _view.ctx.shadowBlur = this.shadowBlur;
-	      _view.ctx.shadowOffsetX = this.shadowOffsetX;
-	      _view.ctx.shadowOffsetY = this.shadowOffsetY;
+	      //_view.ctx.shadowColor = this.shadowColor;
+	      //_view.ctx.shadowBlur = this.shadowBlur;
+	      //_view.ctx.shadowOffsetX = this.shadowOffsetX;
+	      //_view.ctx.shadowOffsetY = this.shadowOffsetY;
 	
 	      _view.ctx.stroke();
 	      _view.ctx.fill();

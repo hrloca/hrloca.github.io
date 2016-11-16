@@ -166,10 +166,10 @@ export class Mono {
     _view.ctx.strokeStyle = this.strokeColor
     _view.ctx.fillStyle = this.fillColor
 
-    _view.ctx.shadowColor = this.shadowColor;
-    _view.ctx.shadowBlur = this.shadowBlur;
-    _view.ctx.shadowOffsetX = this.shadowOffsetX;
-    _view.ctx.shadowOffsetY = this.shadowOffsetY;
+    //_view.ctx.shadowColor = this.shadowColor;
+    //_view.ctx.shadowBlur = this.shadowBlur;
+    //_view.ctx.shadowOffsetX = this.shadowOffsetX;
+    //_view.ctx.shadowOffsetY = this.shadowOffsetY;
 
     _view.ctx.stroke()
     _view.ctx.fill()
