@@ -1,66 +1,44 @@
-import { resize as _resize, size as _size } from './../util/resize'
-import { Mono, View } from './Mono'
+import { resize, size } from './../util/resize'
+import { project, view, Mono, Circle, Size, Point, Rectangle } from './Mono'
 
-class Screen extends View {
-  constructor(props) {
-    super(props)
-  }
-  update() {
-  }
-}
-
-new Screen()
-
-const win = window
-const doc = document
-const raf = win.requestAnimationFrame
-const ratio = win.devicePixelRatio
-const canvas = doc.getElementById('canvas')
-const ctx = canvas.getContext('2d')
-
-const grid = {
-  size: 32,
-}
-
-const board = {
-  w: grid.size * 10,
-  h: grid.size * 20,
-}
-
-const drowBoard = () => {
-  const wSize = _size()
-  const point = [wSize.w / 2 - board.w / 2, wSize.h / 2 - board.h / 2, board.w, board.h]
-  ctx.strokeStyle = '#ddd'
-  ctx.strokeRect(...point)
-  ctx.fillStyle = '#fff'
-  ctx.fillRect(...point)
-}
-
-const drowBackground = (w, h) => {
-  ctx.fillStyle = '#f9f9f9'
-  ctx.fillRect(0,0,w,h)
-}
-
-export default () => {
-  const wSize = _size()
-  const w = wSize.w
-  const h = wSize.h
-  initialCanvasSize(w, h)
-  drowBackground(w, h)
-  drowBoard(w, h)
-}
-
-_resize((e, w, h) => {
-  const wSize = _size()
-  initialCanvasSize(w, h)
-  drowBackground(w, h)
-  drowBoard(w, h)
+const background = new Mono({
+ bounds: new Rectangle(new Point(0, 0), view.size),
+ fillColor: '#fafafa'
 })
 
-const initialCanvasSize = (w, h) => {
-  canvas.width = w * ratio
-  canvas.height = h * ratio
-  canvas.style.width = `${w}px`
-  canvas.style.height = `${h}px`
-  ctx.scale(ratio, ratio)
+const mono = new Mono({
+  bounds: new Rectangle(new Point(320, 480), new Size(128, 128)),
+  strokeColor: '#ddd',
+  fillColor: '#fff',
+})
+
+const maru = new Circle({
+  fillColor: '#fdd',
+  radius: 64,
+  center: new Point(500, 700),
+})
+
+view.drow(background)
+view.drow(mono)
+view.drow(maru)
+
+mono.update = function() {
+  this.bounds = new Rectangle(
+    new Point(this.bounds.point.x + 0.1, this.bounds.point.y + 0.1),
+    new Size(this.bounds.size.w + 0.1, this.bounds.size.h - 0.1)
+  )
 }
+
+maru.update = function() {
+  this.radius = this.radius + 0.1
+  this.center = new Point(this.center.x - 0.1, this.center.y - 0.1)
+}
+
+
+view.onResize = () => {
+  background.bounds = new Rectangle(
+    new Point(0, 0),
+    new Size(size().w, size().h)
+  )
+}
+

@@ -4,7 +4,6 @@ import view from './view'
 export default () => {
   init_board()
   select_block()
-  view()
 }
 
 const rotateRBtn = document.getElementById('r')
