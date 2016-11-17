@@ -6468,28 +6468,93 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Block = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _resize = __webpack_require__(/*! ./../../util/resize */ 26);
 	
-	var _Mono = __webpack_require__(/*! ./Mono */ 27);
+	var _Mono2 = __webpack_require__(/*! ./Mono */ 27);
 	
-	var bg = new _Mono.Mono({
-	  bounds: (0, _Mono.Rectangle)((0, _Mono.Point)(0, 0), _Mono.view.size),
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var COLOR_MAP = ['#fee', '#efe', '#eef', '#eff', '#fef', '#ffe', '#eee'];
+	
+	var bg = new _Mono2.Mono({
+	  bounds: (0, _Mono2.Rectangle)((0, _Mono2.Point)(0, 0), _Mono2.view.size),
 	  fillColor: '#fafafa'
 	});
 	
-	var bord = new _Mono.Mono({
-	  bounds: (0, _Mono.Rectangle)((0, _Mono.Point)(_Mono.view.center.x - 160, _Mono.view.center.y - 240), (0, _Mono.Size)(320, 480)),
+	var bord = new _Mono2.Mono({
+	  bounds: (0, _Mono2.Rectangle)((0, _Mono2.Point)(_Mono2.view.center.x - 160, _Mono2.view.center.y - 320), (0, _Mono2.Size)(320, 640)),
 	  strokeColor: '#ddd',
 	  fillColor: '#fff'
 	});
 	
-	_Mono.view.onResize = function () {
-	  bg.bounds = (0, _Mono.Rectangle)((0, _Mono.Point)(0, 0), (0, _Mono.Size)((0, _resize.size)().w, (0, _resize.size)().h));
-	  bord.bounds = (0, _Mono.Rectangle)((0, _Mono.Point)(_Mono.view.center.x - 160, _Mono.view.center.y - 240), (0, _Mono.Size)(320, 480));
+	// color:string
+	// shape:array
+	
+	var Block = exports.Block = function (_Mono) {
+	  _inherits(Block, _Mono);
+	
+	  function Block(props) {
+	    _classCallCheck(this, Block);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Block).call(this, props));
+	
+	    _this.color = props.color;
+	    _this.shape = props.shape;
+	    _this.blocksize = 32;
+	    return _this;
+	  }
+	
+	  _createClass(Block, [{
+	    key: 'drow',
+	    value: function drow() {
+	      var _this2 = this;
+	
+	      this.view.ctx.beginPath();
+	      this.shape.forEach(function (ar, y) {
+	        ar.forEach(function (v, x) {
+	          if (v) {
+	            var pointX = _this2.bounds.point.x + x * _this2.blocksize;
+	            var pointY = _this2.bounds.point.y + y * _this2.blocksize;
+	            _this2.view.ctx.strokeStyle = _this2.strokeColor;
+	            _this2.view.ctx.fillStyle = _this2.color;
+	            _this2.view.ctx.rect(pointX, pointY, _this2.blocksize, _this2.blocksize);
+	          }
+	        });
+	      });
+	      this.view.ctx.closePath();
+	      this.view.ctx.fill();
+	      this.view.ctx.stroke();
+	    }
+	  }]);
+	
+	  return Block;
+	}(_Mono2.Mono);
+	
+	var block = new Block({
+	  color: COLOR_MAP[5],
+	  shape: [[1, 1, 0], [0, 1, 1], [0, 0, 0]],
+	  strokeColor: '#ddd'
+	});
+	
+	_Mono2.view.onResize = function () {
+	  bg.bounds = (0, _Mono2.Rectangle)((0, _Mono2.Point)(0, 0), (0, _Mono2.Size)((0, _resize.size)().w, (0, _resize.size)().h));
+	  bord.point = (0, _Mono2.Point)(_Mono2.view.center.x - 160, _Mono2.view.center.y - 320);
 	};
 	
-	_Mono.view.put(bg);
-	_Mono.view.put(bord);
+	_Mono2.view.put(bg);
+	_Mono2.view.put(bord);
+	_Mono2.view.put(block);
 
 /***/ },
 /* 26 */
@@ -6558,12 +6623,12 @@
 	
 	//////////////////////////////////////////////////
 	var Point = exports.Point = function Point(x, y) {
-	  return { x: x, y: y };
+	  return { x: x, y: y ? y : x };
 	};
 	
 	//////////////////////////////////////////////////
 	var Size = exports.Size = function Size(w, h) {
-	  return { w: w, h: h };
+	  return { w: w, h: h ? h : w };
 	};
 	
 	//////////////////////////////////////////////////
@@ -6624,6 +6689,10 @@
 	  get center() {
 	    return Point(_view.size.w / 2, _view.size.h / 2);
 	  },
+	
+	  get ctx() {
+	    return _view.ctx;
+	  },
 	  // -> Size
 	  get size() {
 	    return _view.size;
@@ -6682,9 +6751,11 @@
 	    var _ref$bounds = _ref.bounds;
 	    var bounds = _ref$bounds === undefined ? Rectangle(Point(320, 400), Size(64, 64)) : _ref$bounds;
 	    var _ref$strokeColor = _ref.strokeColor;
-	    var strokeColor = _ref$strokeColor === undefined ? '#eee' : _ref$strokeColor;
+	    var strokeColor = _ref$strokeColor === undefined ? 'rgba(0,0,0,0)' : _ref$strokeColor;
 	    var _ref$fillColor = _ref.fillColor;
-	    var fillColor = _ref$fillColor === undefined ? '#fff' : _ref$fillColor;
+	    var fillColor = _ref$fillColor === undefined ? 'rgba(0,0,0,0)' : _ref$fillColor;
+	    var _ref$isShadow = _ref.isShadow;
+	    var isShadow = _ref$isShadow === undefined ? false : _ref$isShadow;
 	
 	    _classCallCheck(this, Mono);
 	
@@ -6705,8 +6776,8 @@
 	    // #000;
 	    this.fillColor = fillColor;
 	    // 1 1 1 1 #000;
-	    this.shadowColor = 'rgba(0,0,0,0.2)';
-	    this.shadowBlur = 8;
+	    this.shadowColor = 'rgba(0,0,0,0)';
+	    this.shadowBlur = 0;
 	    this.shadowOffsetX = 0;
 	    this.shadowOffsetY = 0;
 	
@@ -6723,18 +6794,34 @@
 	      ctx.strokeStyle = this.strokeColor;
 	      ctx.fillStyle = this.fillColor;
 	
-	      // ctx.shadowColor = this.shadowColor;
-	      // ctx.shadowBlur = this.shadowBlur;
-	      // ctx.shadowOffsetX = this.shadowOffsetX;
-	      // ctx.shadowOffsetY = this.shadowOffsetY;
+	      ctx.shadowColor = this.shadowColor;
+	      ctx.shadowBlur = this.shadowBlur;
+	      ctx.shadowOffsetX = this.shadowOffsetX;
+	      ctx.shadowOffsetY = this.shadowOffsetY;
 	
-	      ctx.stroke();
 	      ctx.fill();
+	      ctx.stroke();
 	    }
 	  }, {
 	    key: 'update',
 	    set: function set(fn) {
 	      this.view.onFrame = fn.bind(this);
+	    }
+	  }, {
+	    key: 'point',
+	    set: function set(point) {
+	      this.bounds = Rectangle(point, Size(this.bounds.size.w, this.bounds.size.h));
+	    },
+	    get: function get() {
+	      return Point(this.bounds.point.x, this.bounds.point.y);
+	    }
+	  }, {
+	    key: 'size',
+	    set: function set(size) {
+	      this.bounds = Rectangle(Point(this.bounds.point.x, this.bounds.point.y), size);
+	    },
+	    get: function get() {
+	      return Size(this.bounds.size.w, this.bounds.size.h);
 	    }
 	  }]);
 	

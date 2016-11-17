@@ -9,13 +9,13 @@ const interval = win.setInterval
 const ratio = win.devicePixelRatio
 
 //////////////////////////////////////////////////
-export const Point = (x, y) => ({x, y})
+export const Point = (x, y) => ({ x, y: (y ? y : x) })
 
 //////////////////////////////////////////////////
-export const Size = (w, h) => ({w, h})
+export const Size = (w, h) => ({ w, h: (h ? h : w )})
 
 //////////////////////////////////////////////////
-export const Rectangle = (point, size) => ({point, size})
+export const Rectangle = (point, size) => ({ point, size })
 
 //////////////////////////////////////////////////
 export const project = {
@@ -63,6 +63,10 @@ export const view = {
   // -> Size
   get center() {
     return Point(_view.size.w / 2, _view.size.h / 2)
+  },
+
+  get ctx() {
+    return _view.ctx
   },
   // -> Size
   get size() {
@@ -113,8 +117,9 @@ if (_view.isFullScreen) {
 export class Mono {
   constructor({
     bounds = Rectangle(Point(320, 400), Size(64, 64)),
-    strokeColor = '#eee',
-    fillColor = '#fff',
+    strokeColor = 'rgba(0,0,0,0)',
+    fillColor = 'rgba(0,0,0,0)',
+    isShadow = false
   } = {}) {
     // String
     this.id
@@ -133,8 +138,8 @@ export class Mono {
     // #000;
     this.fillColor = fillColor;
     // 1 1 1 1 #000;
-    this.shadowColor = 'rgba(0,0,0,0.2)';
-    this.shadowBlur = 8;
+    this.shadowColor = 'rgba(0,0,0,0)';
+    this.shadowBlur = 0;
     this.shadowOffsetX = 0;
     this.shadowOffsetY = 0;
 
@@ -146,6 +151,11 @@ export class Mono {
     this.view.onFrame = fn.bind(this)
   }
 
+  set point(point) { this.bounds = Rectangle(point, Size(this.bounds.size.w, this.bounds.size.h)) }
+  get point() { return Point(this.bounds.point.x, this.bounds.point.y) }
+  set size(size) { this.bounds = Rectangle(Point(this.bounds.point.x, this.bounds.point.y), size) }
+  get size() { return Size(this.bounds.size.w, this.bounds.size.h) }
+
   drow() {
     ctx.beginPath()
     ctx.rect(this.bounds.point.x, this.bounds.point.y, this.bounds.size.w, this.bounds.size.h)
@@ -153,13 +163,13 @@ export class Mono {
     ctx.strokeStyle = this.strokeColor
     ctx.fillStyle = this.fillColor
 
-    // ctx.shadowColor = this.shadowColor;
-    // ctx.shadowBlur = this.shadowBlur;
-    // ctx.shadowOffsetX = this.shadowOffsetX;
-    // ctx.shadowOffsetY = this.shadowOffsetY;
+    ctx.shadowColor = this.shadowColor
+    ctx.shadowBlur = this.shadowBlur
+    ctx.shadowOffsetX = this.shadowOffsetX
+    ctx.shadowOffsetY = this.shadowOffsetY
 
-    ctx.stroke()
     ctx.fill()
+    ctx.stroke()
   }
 
 }
@@ -182,4 +192,3 @@ export class Circle extends Mono {
   }
 
 }
-
