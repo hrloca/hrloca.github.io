@@ -236,6 +236,7 @@ textarea {
   box-sizing: border-box;
 }
 html {
+  overflow: hidden;
 }
 body{
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', '\6E38\30B4\30B7\30C3\30AF   Medium', '\30E1\30A4\30EA\30AA', meiryo, sans-serif;
@@ -244,6 +245,7 @@ body{
   width: 100%;
   word-wrap: break-word;
   word-wrap: break-word;
+  overflow: hidden;
 }
 a {
   color: #666;
