@@ -1,4 +1,4 @@
-import { resize as resize, size as size } from './../util/resize'
+import { resize as resize, size as size } from './../../util/resize'
 
 const win = window
 const doc = document
@@ -9,29 +9,13 @@ const interval = win.setInterval
 const ratio = win.devicePixelRatio
 
 //////////////////////////////////////////////////
-export class Point {
-  constructor(x, y) {
-    this.x = x
-    this.y = y
-  }
-}
+export const Point = (x, y) => ({x, y})
 
 //////////////////////////////////////////////////
-export class Size {
-  constructor(w, h) {
-    this.w = w
-    this.h = h
-  }
-}
+export const Size = (w, h) => ({w, h})
 
 //////////////////////////////////////////////////
-export class Rectangle {
-  constructor(point, size) {
-    this.point = point
-    this.size = size
-  }
-}
-
+export const Rectangle = (point, size) => ({point, size})
 
 //////////////////////////////////////////////////
 export const project = {
@@ -42,8 +26,8 @@ const _view = {
   element: canvas,
   ctx: ctx,
   pixelRatio: ratio,
-  center: new Point(0, 0),
-  size: new Size(0, 0),
+  center: Point(0, 0),
+  size: Size(0, 0),
   isFullScreen: true,
   setSize() { // () -> undf
     _view.element.width = _view.size.w * _view.pixelRatio
@@ -56,17 +40,53 @@ const _view = {
   clickPool: [],
   framePool: [],
   drowPool: [],
+
   frame() {
     for (let i = 0; i < _view.framePool.length; ++i) { _view.framePool[i]() }
-    _view.ctx.clearRect(0, 0, view.size.w, view.size.h)
-    drowing()
+    _view.drowPool.length && drowing()
     raf(_view.frame)
   },
+
   resize() {
     for (let i = 0; i < _view.resizePool.length; ++i) { _view.resizePool[i]() }
-    if (_view.isFullScreen) {
-      view.size = new Size(size().w, size().h)
-    }
+  },
+}
+export const view = {
+  // (mono:Mono) -> Number
+  put(mono) {
+    return _view.drowPool.push(mono.drow.bind(mono))
+  },
+  // -> Number
+  get pixelRatio() {
+    return _view.pixelRatio
+  },
+  // -> Size
+  get center() {
+    return Point(_view.size.w / 2, _view.size.h / 2)
+  },
+  // -> Size
+  get size() {
+    return _view.size
+  },
+  set fullscreen(bool) {
+    _view.framePool.push(fn)
+  },
+  // (size:Size)
+  set size(size) {
+    _view.size = size
+    _view.setSize()
+  },
+  // (fn:Function)
+  set onFrame(fn) {
+    _view.framePool.push(fn)
+  },
+  // (fn:Function)
+  set onResize(fn) {
+    _view.resizePool.push(fn)
+  },
+  // (fn:Function)
+  set onClick(fn) {
+    _view.clickPool.push(fn)
   },
 }
 
@@ -78,54 +98,21 @@ _view.element.addEventListener('click', (e) => {
 })
 
 const drowing = () => {
+  _view.ctx.clearRect(0, 0, view.size.w, view.size.h)
   for (let i = 0; i < _view.drowPool.length; ++i) { _view.drowPool[i]() }
 }
 
-export const view = {
-  // -> Number
-  drow(mono) {
-    return _view.drowPool.push(mono.drow.bind(mono))
-  },
-  // -> Number
-  get pixelRatio() {
-    return _view.pixelRatio
-  },
-  // -> Size
-  get center() {
-    return new Point(_view.size.w / 2, _view.size.h / 2)
-  },
-  // -> Size
-  get size() {
-    return _view.size
-  },
-  set fullscreen(bool) {
-    _view.framePool.push(fn)
-  },
-  // (Size)
-  set size(size) {
-    _view.size = size
-    _view.setSize()
-  },
-  // (Function)
-  set onFrame(fn) {
-    _view.framePool.push(fn)
-  },
-  // (Function)
-  set onResize(fn) {
-    _view.resizePool.push(fn)
-  },
-  // (Function)
-  set onClick(fn) {
-    _view.clickPool.push(fn)
-  },
+if (_view.isFullScreen) {
+  view.size = Size(size().w, size().h)
+  view.onResize = () => {
+    view.size = Size(size().w, size().h)
+  }
 }
-
-_view.isFullScreen && (view.size = new Size(size().w, size().h));
 
 //////////////////////////////////////////////////
 export class Mono {
   constructor({
-    bounds = new Rectangle(new Point(320, 400), new Size(64, 64)),
+    bounds = Rectangle(Point(320, 400), Size(64, 64)),
     strokeColor = '#eee',
     fillColor = '#fff',
   } = {}) {
@@ -160,19 +147,19 @@ export class Mono {
   }
 
   drow() {
-    _view.ctx.beginPath()
-    _view.ctx.rect(this.bounds.point.x, this.bounds.point.y, this.bounds.size.w, this.bounds.size.h)
-    _view.ctx.closePath()
-    _view.ctx.strokeStyle = this.strokeColor
-    _view.ctx.fillStyle = this.fillColor
+    ctx.beginPath()
+    ctx.rect(this.bounds.point.x, this.bounds.point.y, this.bounds.size.w, this.bounds.size.h)
+    ctx.closePath()
+    ctx.strokeStyle = this.strokeColor
+    ctx.fillStyle = this.fillColor
 
-    //_view.ctx.shadowColor = this.shadowColor;
-    //_view.ctx.shadowBlur = this.shadowBlur;
-    //_view.ctx.shadowOffsetX = this.shadowOffsetX;
-    //_view.ctx.shadowOffsetY = this.shadowOffsetY;
+    // ctx.shadowColor = this.shadowColor;
+    // ctx.shadowBlur = this.shadowBlur;
+    // ctx.shadowOffsetX = this.shadowOffsetX;
+    // ctx.shadowOffsetY = this.shadowOffsetY;
 
-    _view.ctx.stroke()
-    _view.ctx.fill()
+    ctx.stroke()
+    ctx.fill()
   }
 
 }
@@ -181,17 +168,17 @@ export class Circle extends Mono {
   constructor(props) {
     super(props)
     this.radius = props.radius || 32;
-    this.center = props.center || new Point(300, 200);
+    this.center = props.center || Point(300, 200);
   }
 
   drow() {
-    _view.ctx.beginPath()
-    _view.ctx.arc(this.center.x, this.center.y, this.radius, 0, Math.PI*2, false);
-    _view.ctx.closePath()
-    _view.ctx.strokeStyle = this.strokeColor
-    _view.ctx.fillStyle = this.fillColor
-    _view.ctx.stroke()
-    _view.ctx.fill()
+    ctx.beginPath()
+    ctx.arc(this.center.x, this.center.y, this.radius, 0, Math.PI*2, false);
+    ctx.closePath()
+    ctx.strokeStyle = this.strokeColor
+    ctx.fillStyle = this.fillColor
+    ctx.stroke()
+    ctx.fill()
   }
 
 }

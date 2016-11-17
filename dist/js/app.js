@@ -6461,50 +6461,35 @@
 
 /***/ },
 /* 25 */
-/*!*******************************!*\
-  !*** ./src/js/tetris/view.js ***!
-  \*******************************/
+/*!*************************************!*\
+  !*** ./src/js/tetris/view/index.js ***!
+  \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _resize = __webpack_require__(/*! ./../util/resize */ 26);
+	var _resize = __webpack_require__(/*! ./../../util/resize */ 26);
 	
 	var _Mono = __webpack_require__(/*! ./Mono */ 27);
 	
-	var background = new _Mono.Mono({
-	  bounds: new _Mono.Rectangle(new _Mono.Point(0, 0), _Mono.view.size),
+	var bg = new _Mono.Mono({
+	  bounds: (0, _Mono.Rectangle)((0, _Mono.Point)(0, 0), _Mono.view.size),
 	  fillColor: '#fafafa'
 	});
 	
-	var mono = new _Mono.Mono({
-	  bounds: new _Mono.Rectangle(new _Mono.Point(320, 480), new _Mono.Size(128, 128)),
+	var bord = new _Mono.Mono({
+	  bounds: (0, _Mono.Rectangle)((0, _Mono.Point)(_Mono.view.center.x - 160, _Mono.view.center.y - 240), (0, _Mono.Size)(320, 480)),
 	  strokeColor: '#ddd',
 	  fillColor: '#fff'
 	});
 	
-	var maru = new _Mono.Circle({
-	  fillColor: '#fee',
-	  strokeColor: '#ddd',
-	  radius: 64,
-	  center: new _Mono.Point(500, 700)
-	});
-	
-	mono.update = function () {
-	  this.bounds = new _Mono.Rectangle(new _Mono.Point(this.bounds.point.x + 0.2, this.bounds.point.y + 0.2), new _Mono.Size(this.bounds.size.w + 0.2, this.bounds.size.h - 0.2));
-	};
-	
-	maru.update = function () {
-	  this.radius = this.radius + 0.2;
-	  this.center = new _Mono.Point(this.center.x - 0.2, this.center.y - 0.2);
-	};
-	
-	_Mono.view.drow(background);
-	_Mono.view.drow(mono);
-	_Mono.view.drow(maru);
 	_Mono.view.onResize = function () {
-	  background.bounds = new _Mono.Rectangle(new _Mono.Point(0, 0), new _Mono.Size((0, _resize.size)().w, (0, _resize.size)().h));
+	  bg.bounds = (0, _Mono.Rectangle)((0, _Mono.Point)(0, 0), (0, _Mono.Size)((0, _resize.size)().w, (0, _resize.size)().h));
+	  bord.bounds = (0, _Mono.Rectangle)((0, _Mono.Point)(_Mono.view.center.x - 160, _Mono.view.center.y - 240), (0, _Mono.Size)(320, 480));
 	};
+	
+	_Mono.view.put(bg);
+	_Mono.view.put(bord);
 
 /***/ },
 /* 26 */
@@ -6541,9 +6526,9 @@
 
 /***/ },
 /* 27 */
-/*!*******************************!*\
-  !*** ./src/js/tetris/Mono.js ***!
-  \*******************************/
+/*!************************************!*\
+  !*** ./src/js/tetris/view/Mono.js ***!
+  \************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6555,7 +6540,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _resize = __webpack_require__(/*! ./../util/resize */ 26);
+	var _resize = __webpack_require__(/*! ./../../util/resize */ 26);
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
@@ -6572,37 +6557,21 @@
 	var ratio = win.devicePixelRatio;
 	
 	//////////////////////////////////////////////////
-	
 	var Point = exports.Point = function Point(x, y) {
-	  _classCallCheck(this, Point);
-	
-	  this.x = x;
-	  this.y = y;
+	  return { x: x, y: y };
 	};
 	
 	//////////////////////////////////////////////////
-	
-	
 	var Size = exports.Size = function Size(w, h) {
-	  _classCallCheck(this, Size);
-	
-	  this.w = w;
-	  this.h = h;
+	  return { w: w, h: h };
 	};
 	
 	//////////////////////////////////////////////////
-	
-	
 	var Rectangle = exports.Rectangle = function Rectangle(point, size) {
-	  _classCallCheck(this, Rectangle);
-	
-	  this.point = point;
-	  this.size = size;
+	  return { point: point, size: size };
 	};
 	
 	//////////////////////////////////////////////////
-	
-	
 	var project = exports.project = {};
 	
 	//////////////////////////////////////////////////
@@ -6610,8 +6579,8 @@
 	  element: canvas,
 	  ctx: ctx,
 	  pixelRatio: ratio,
-	  center: new Point(0, 0),
-	  size: new Size(0, 0),
+	  center: Point(0, 0),
+	  size: Size(0, 0),
 	  isFullScreen: true,
 	  setSize: function setSize() {
 	    // () -> undf
@@ -6626,21 +6595,58 @@
 	  clickPool: [],
 	  framePool: [],
 	  drowPool: [],
+	
 	  frame: function frame() {
 	    for (var i = 0; i < _view.framePool.length; ++i) {
 	      _view.framePool[i]();
 	    }
-	    _view.ctx.clearRect(0, 0, view.size.w, view.size.h);
-	    drowing();
+	    _view.drowPool.length && drowing();
 	    raf(_view.frame);
 	  },
 	  resize: function resize() {
 	    for (var i = 0; i < _view.resizePool.length; ++i) {
 	      _view.resizePool[i]();
 	    }
-	    if (_view.isFullScreen) {
-	      view.size = new Size((0, _resize.size)().w, (0, _resize.size)().h);
-	    }
+	  }
+	};
+	var view = exports.view = {
+	  // (mono:Mono) -> Number
+	
+	  put: function put(mono) {
+	    return _view.drowPool.push(mono.drow.bind(mono));
+	  },
+	
+	  // -> Number
+	  get pixelRatio() {
+	    return _view.pixelRatio;
+	  },
+	  // -> Size
+	  get center() {
+	    return Point(_view.size.w / 2, _view.size.h / 2);
+	  },
+	  // -> Size
+	  get size() {
+	    return _view.size;
+	  },
+	  set fullscreen(bool) {
+	    _view.framePool.push(fn);
+	  },
+	  // (size:Size)
+	  set size(size) {
+	    _view.size = size;
+	    _view.setSize();
+	  },
+	  // (fn:Function)
+	  set onFrame(fn) {
+	    _view.framePool.push(fn);
+	  },
+	  // (fn:Function)
+	  set onResize(fn) {
+	    _view.resizePool.push(fn);
+	  },
+	  // (fn:Function)
+	  set onClick(fn) {
+	    _view.clickPool.push(fn);
 	  }
 	};
 	
@@ -6654,53 +6660,18 @@
 	});
 	
 	var drowing = function drowing() {
+	  _view.ctx.clearRect(0, 0, view.size.w, view.size.h);
 	  for (var i = 0; i < _view.drowPool.length; ++i) {
 	    _view.drowPool[i]();
 	  }
 	};
 	
-	var view = exports.view = {
-	  // -> Number
-	
-	  drow: function drow(mono) {
-	    return _view.drowPool.push(mono.drow.bind(mono));
-	  },
-	
-	  // -> Number
-	  get pixelRatio() {
-	    return _view.pixelRatio;
-	  },
-	  // -> Size
-	  get center() {
-	    return new Point(_view.size.w / 2, _view.size.h / 2);
-	  },
-	  // -> Size
-	  get size() {
-	    return _view.size;
-	  },
-	  set fullscreen(bool) {
-	    _view.framePool.push(fn);
-	  },
-	  // (Size)
-	  set size(size) {
-	    _view.size = size;
-	    _view.setSize();
-	  },
-	  // (Function)
-	  set onFrame(fn) {
-	    _view.framePool.push(fn);
-	  },
-	  // (Function)
-	  set onResize(fn) {
-	    _view.resizePool.push(fn);
-	  },
-	  // (Function)
-	  set onClick(fn) {
-	    _view.clickPool.push(fn);
-	  }
-	};
-	
-	_view.isFullScreen && (view.size = new Size((0, _resize.size)().w, (0, _resize.size)().h));
+	if (_view.isFullScreen) {
+	  view.size = Size((0, _resize.size)().w, (0, _resize.size)().h);
+	  view.onResize = function () {
+	    view.size = Size((0, _resize.size)().w, (0, _resize.size)().h);
+	  };
+	}
 	
 	//////////////////////////////////////////////////
 	
@@ -6709,7 +6680,7 @@
 	    var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	
 	    var _ref$bounds = _ref.bounds;
-	    var bounds = _ref$bounds === undefined ? new Rectangle(new Point(320, 400), new Size(64, 64)) : _ref$bounds;
+	    var bounds = _ref$bounds === undefined ? Rectangle(Point(320, 400), Size(64, 64)) : _ref$bounds;
 	    var _ref$strokeColor = _ref.strokeColor;
 	    var strokeColor = _ref$strokeColor === undefined ? '#eee' : _ref$strokeColor;
 	    var _ref$fillColor = _ref.fillColor;
@@ -6746,19 +6717,19 @@
 	  _createClass(Mono, [{
 	    key: 'drow',
 	    value: function drow() {
-	      _view.ctx.beginPath();
-	      _view.ctx.rect(this.bounds.point.x, this.bounds.point.y, this.bounds.size.w, this.bounds.size.h);
-	      _view.ctx.closePath();
-	      _view.ctx.strokeStyle = this.strokeColor;
-	      _view.ctx.fillStyle = this.fillColor;
+	      ctx.beginPath();
+	      ctx.rect(this.bounds.point.x, this.bounds.point.y, this.bounds.size.w, this.bounds.size.h);
+	      ctx.closePath();
+	      ctx.strokeStyle = this.strokeColor;
+	      ctx.fillStyle = this.fillColor;
 	
-	      //_view.ctx.shadowColor = this.shadowColor;
-	      //_view.ctx.shadowBlur = this.shadowBlur;
-	      //_view.ctx.shadowOffsetX = this.shadowOffsetX;
-	      //_view.ctx.shadowOffsetY = this.shadowOffsetY;
+	      // ctx.shadowColor = this.shadowColor;
+	      // ctx.shadowBlur = this.shadowBlur;
+	      // ctx.shadowOffsetX = this.shadowOffsetX;
+	      // ctx.shadowOffsetY = this.shadowOffsetY;
 	
-	      _view.ctx.stroke();
-	      _view.ctx.fill();
+	      ctx.stroke();
+	      ctx.fill();
 	    }
 	  }, {
 	    key: 'update',
@@ -6779,20 +6750,20 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Circle).call(this, props));
 	
 	    _this.radius = props.radius || 32;
-	    _this.center = props.center || new Point(300, 200);
+	    _this.center = props.center || Point(300, 200);
 	    return _this;
 	  }
 	
 	  _createClass(Circle, [{
 	    key: 'drow',
 	    value: function drow() {
-	      _view.ctx.beginPath();
-	      _view.ctx.arc(this.center.x, this.center.y, this.radius, 0, Math.PI * 2, false);
-	      _view.ctx.closePath();
-	      _view.ctx.strokeStyle = this.strokeColor;
-	      _view.ctx.fillStyle = this.fillColor;
-	      _view.ctx.stroke();
-	      _view.ctx.fill();
+	      ctx.beginPath();
+	      ctx.arc(this.center.x, this.center.y, this.radius, 0, Math.PI * 2, false);
+	      ctx.closePath();
+	      ctx.strokeStyle = this.strokeColor;
+	      ctx.fillStyle = this.fillColor;
+	      ctx.stroke();
+	      ctx.fill();
 	    }
 	  }]);
 	
