@@ -1,5 +1,6 @@
 import { resize, size } from './../../util/resize'
-import { view, Mono, Circle, Size, Point, Rectangle } from './Mono'
+import { project, view, Mono, Circle, Size, Point, Rectangle } from './Mono'
+import { transmit } from './../store'
 
 const COLOR_MAP = [
   '#fee',
@@ -30,7 +31,9 @@ export class Block extends Mono {
     this.color = props.color
     this.shape = props.shape
     this.blocksize = 32
+    this.strokeColor = '#ddd'
   }
+
   drow() {
     this.view.ctx.beginPath()
     this.shape.forEach((ar, y) => {
@@ -52,8 +55,13 @@ export class Block extends Mono {
 
 const block = new Block({
   color: COLOR_MAP[5],
-  shape: [[1,1,0], [0,1,1], [0,0,0]],
-  strokeColor: '#ddd',
+  shape: [],
+})
+
+transmit((state) => {
+  block.color = COLOR_MAP[state.block.id]
+  block.shape = state.block.body
+  block.point = Point(320 + state.block.X * 32, 130 + state.block.Y * 32)
 })
 
 view.onResize = () => {

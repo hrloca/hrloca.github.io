@@ -19,6 +19,7 @@ export const Rectangle = (point, size) => ({ point, size })
 
 //////////////////////////////////////////////////
 export const project = {
+  key: '',
 }
 
 //////////////////////////////////////////////////
@@ -101,6 +102,14 @@ _view.element.addEventListener('click', (e) => {
   for (let i = 0; i < _view.clickPool.length; ++i) { _view.clickPool[i](e) }
 })
 
+doc.addEventListener('keydown', (e) => {
+  project.key = e.key;
+})
+
+doc.addEventListener('keyup', () => {
+  project.key = '';
+})
+
 const drowing = () => {
   _view.ctx.clearRect(0, 0, view.size.w, view.size.h)
   for (let i = 0; i < _view.drowPool.length; ++i) { _view.drowPool[i]() }
@@ -116,23 +125,15 @@ if (_view.isFullScreen) {
 //////////////////////////////////////////////////
 export class Mono {
   constructor({
-    bounds = Rectangle(Point(320, 400), Size(64, 64)),
+    bounds,
+    size = Size(64, 64),
+    position = Point(320, 480),
     strokeColor = 'rgba(0,0,0,0)',
     fillColor = 'rgba(0,0,0,0)',
     isShadow = false
   } = {}) {
-    // String
-    this.id
-    // String
-    this.className
-    // Point
-    this.pivot
-    // Point
-    this.posision
     // Rectangle
-    this.bounds = bounds
-
-    // style
+    this.bounds = bounds || Rectangle(position, Size)
     // #000;
     this.strokeColor = strokeColor;
     // #000;
@@ -145,6 +146,8 @@ export class Mono {
 
     // view
     this.view = view
+    // project
+    this.project = project
   }
 
   set update(fn) {

@@ -6479,6 +6479,8 @@
 	
 	var _Mono2 = __webpack_require__(/*! ./Mono */ 27);
 	
+	var _store = __webpack_require__(/*! ./../store */ 2);
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -6512,6 +6514,7 @@
 	    _this.color = props.color;
 	    _this.shape = props.shape;
 	    _this.blocksize = 32;
+	    _this.strokeColor = '#ddd';
 	    return _this;
 	  }
 	
@@ -6543,8 +6546,13 @@
 	
 	var block = new Block({
 	  color: COLOR_MAP[5],
-	  shape: [[1, 1, 0], [0, 1, 1], [0, 0, 0]],
-	  strokeColor: '#ddd'
+	  shape: []
+	});
+	
+	(0, _store.transmit)(function (state) {
+	  block.color = COLOR_MAP[state.block.id];
+	  block.shape = state.block.body;
+	  block.point = (0, _Mono2.Point)(320 + state.block.X * 32, 130 + state.block.Y * 32);
 	});
 	
 	_Mono2.view.onResize = function () {
@@ -6637,7 +6645,9 @@
 	};
 	
 	//////////////////////////////////////////////////
-	var project = exports.project = {};
+	var project = exports.project = {
+	  key: ''
+	};
 	
 	//////////////////////////////////////////////////
 	var _view = {
@@ -6728,6 +6738,14 @@
 	  }
 	});
 	
+	doc.addEventListener('keydown', function (e) {
+	  project.key = e.key;
+	});
+	
+	doc.addEventListener('keyup', function () {
+	  project.key = '';
+	});
+	
 	var drowing = function drowing() {
 	  _view.ctx.clearRect(0, 0, view.size.w, view.size.h);
 	  for (var i = 0; i < _view.drowPool.length; ++i) {
@@ -6748,8 +6766,11 @@
 	  function Mono() {
 	    var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	
-	    var _ref$bounds = _ref.bounds;
-	    var bounds = _ref$bounds === undefined ? Rectangle(Point(320, 400), Size(64, 64)) : _ref$bounds;
+	    var bounds = _ref.bounds;
+	    var _ref$size = _ref.size;
+	    var size = _ref$size === undefined ? Size(64, 64) : _ref$size;
+	    var _ref$position = _ref.position;
+	    var position = _ref$position === undefined ? Point(320, 480) : _ref$position;
 	    var _ref$strokeColor = _ref.strokeColor;
 	    var strokeColor = _ref$strokeColor === undefined ? 'rgba(0,0,0,0)' : _ref$strokeColor;
 	    var _ref$fillColor = _ref.fillColor;
@@ -6759,18 +6780,8 @@
 	
 	    _classCallCheck(this, Mono);
 	
-	    // String
-	    this.id;
-	    // String
-	    this.className;
-	    // Point
-	    this.pivot;
-	    // Point
-	    this.posision;
 	    // Rectangle
-	    this.bounds = bounds;
-	
-	    // style
+	    this.bounds = bounds || Rectangle(position, Size);
 	    // #000;
 	    this.strokeColor = strokeColor;
 	    // #000;
@@ -6783,6 +6794,8 @@
 	
 	    // view
 	    this.view = view;
+	    // project
+	    this.project = project;
 	  }
 	
 	  _createClass(Mono, [{
