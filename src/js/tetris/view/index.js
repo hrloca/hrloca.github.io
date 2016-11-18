@@ -26,10 +26,10 @@ const bord = new Mono({
 // color:string
 // shape:array
 export class Block extends Mono {
-  constructor(props) {
+  constructor(props = {}) {
     super(props)
-    this.color = props.color
-    this.shape = props.shape
+    this.color = props.color || ''
+    this.shape = props.shape || []
     this.blocksize = 32
     this.strokeColor = '#ddd'
   }
@@ -53,15 +53,12 @@ export class Block extends Mono {
   }
 }
 
-const block = new Block({
-  color: COLOR_MAP[5],
-  shape: [],
-})
+const block = new Block()
 
 transmit((state) => {
   block.color = COLOR_MAP[state.block.id]
   block.shape = state.block.body
-  block.point = Point(320 + state.block.X * 32, 130 + state.block.Y * 32)
+  block.point = Point(bord.point.x + state.block.X * 32, bord.point.y + state.block.Y * 32)
 })
 
 view.onResize = () => {

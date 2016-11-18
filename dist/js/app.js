@@ -6537,13 +6537,15 @@
 	var Block = exports.Block = function (_Mono) {
 	  _inherits(Block, _Mono);
 	
-	  function Block(props) {
+	  function Block() {
+	    var props = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	
 	    _classCallCheck(this, Block);
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Block).call(this, props));
 	
-	    _this.color = props.color;
-	    _this.shape = props.shape;
+	    _this.color = props.color || '';
+	    _this.shape = props.shape || [];
 	    _this.blocksize = 32;
 	    _this.strokeColor = '#ddd';
 	    return _this;
@@ -6575,15 +6577,12 @@
 	  return Block;
 	}(_Mono2.Mono);
 	
-	var block = new Block({
-	  color: COLOR_MAP[5],
-	  shape: []
-	});
+	var block = new Block();
 	
 	(0, _store.transmit)(function (state) {
 	  block.color = COLOR_MAP[state.block.id];
 	  block.shape = state.block.body;
-	  block.point = (0, _Mono2.Point)(320 + state.block.X * 32, 130 + state.block.Y * 32);
+	  block.point = (0, _Mono2.Point)(bord.point.x + state.block.X * 32, bord.point.y + state.block.Y * 32);
 	});
 	
 	_Mono2.view.onResize = function () {
@@ -6893,8 +6892,8 @@
 	      ctx.closePath();
 	      ctx.strokeStyle = this.strokeColor;
 	      ctx.fillStyle = this.fillColor;
-	      ctx.stroke();
 	      ctx.fill();
+	      ctx.stroke();
 	    }
 	  }]);
 	

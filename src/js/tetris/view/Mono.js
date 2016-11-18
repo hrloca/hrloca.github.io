@@ -190,8 +190,8 @@ export class Circle extends Mono {
     ctx.closePath()
     ctx.strokeStyle = this.strokeColor
     ctx.fillStyle = this.fillColor
-    ctx.stroke()
     ctx.fill()
+    ctx.stroke()
   }
 
 }
