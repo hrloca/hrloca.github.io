@@ -69,6 +69,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.keymap = undefined;
 	
 	var _store = __webpack_require__(/*! ./store */ 2);
 	
@@ -78,16 +79,13 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = function () {
-	  (0, _store.init_board)();
-	  (0, _store.select_block)();
-	};
+	var doc = document;
 	
-	var rotateRBtn = document.getElementById('r');
-	var rotateLBtn = document.getElementById('l');
-	var leftBtn = document.getElementById('left');
-	var rightBtn = document.getElementById('right');
-	var downBtn = document.getElementById('down');
+	var rotateRBtn = doc.getElementById('r');
+	var rotateLBtn = doc.getElementById('l');
+	var leftBtn = doc.getElementById('left');
+	var rightBtn = doc.getElementById('right');
+	var downBtn = doc.getElementById('down');
 	
 	leftBtn.addEventListener('click', function () {
 	  (0, _store.move)(-1, 0);
@@ -104,6 +102,39 @@
 	rotateRBtn.addEventListener('click', function () {
 	  (0, _store.rotate)(1);
 	});
+	
+	var keymap = exports.keymap = new Set();
+	
+	doc.addEventListener('keydown', function (e) {
+	  keymap.add(e.key);
+	  switch (true) {
+	    case keymap.has('ArrowLeft') && keymap.has('ArrowDown'):
+	      (0, _store.move)(-1, 1);break;
+	    case keymap.has('ArrowRight') && keymap.has('ArrowDown'):
+	      (0, _store.move)(1, 1);break;
+	    case keymap.has('ArrowDown'):
+	      (0, _store.move)(0, 1);break;
+	    case keymap.has('ArrowLeft'):
+	      (0, _store.move)(-1, 0);break;
+	    case keymap.has('ArrowRight'):
+	      (0, _store.move)(1, 0);break;
+	    case keymap.has('ArrowUp'):
+	      (0, _store.move)(0, -1);break;
+	    case keymap.has('q'):
+	      (0, _store.rotate)(-1);break;
+	    case keymap.has('w'):
+	      (0, _store.rotate)(1);break;
+	  }
+	});
+	
+	doc.addEventListener('keyup', function (e) {
+	  keymap.delete(e.key);
+	});
+	
+	exports.default = function () {
+	  (0, _store.init_board)();
+	  (0, _store.select_block)();
+	};
 
 /***/ },
 /* 2 */
