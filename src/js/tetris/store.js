@@ -1,6 +1,9 @@
 import Im from 'immutable'
 import { createStore } from 'redux'
 
+const win = window
+const intrval = win.setInterval
+const clearIntrval = win.clearInterval
 const COL = 10
 const ROW = 20
 
@@ -103,6 +106,9 @@ const store = createStore((state = __state, action) => {
     case 'move':
       const moveValidX = validX(action.x, state.block.X, state.block.Y, state.block.body, state.board)
       const moveValidY = validY(action.y, state.block.X, state.block.Y, state.block.body, state.board)
+      if (!moveValidY) {
+        console.log('着地')
+      }
       return Im.fromJS(state)
         .updateIn(['block', 'X'], v => !(action.x && moveValidX) ? v : v + action.x)
         .updateIn(['block', 'Y'], v => !(action.y && moveValidY) ? v : v + action.y)
@@ -187,8 +193,15 @@ export const transmit = (cb = () => null) => {
 const storeSubscribePool = []
 store.subscribe(() => {
   const state = store.getState();
-  const block = state.block;
   // block.body.forEach(v => console.log(v))
   // console.log(`POS:(${block.X},${block.Y})`)
   storeSubscribePool.forEach((cb) => cb(state))
 })
+
+const intervalByLevel = (cb) => {
+  const setLevel = (level, cb) => {
+    //return () => clearIntrval(interval(cb, 1000 / level))
+  }
+  return setLevel(level, cb)
+}
+

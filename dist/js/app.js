@@ -160,6 +160,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var win = window;
+	var intrval = win.setInterval;
+	var clearIntrval = win.clearInterval;
 	var COL = 10;
 	var ROW = 20;
 	
@@ -247,6 +250,9 @@
 	      case 'move':
 	        var moveValidX = validX(action.x, state.block.X, state.block.Y, state.block.body, state.board);
 	        var moveValidY = validY(action.y, state.block.X, state.block.Y, state.block.body, state.board);
+	        if (!moveValidY) {
+	          console.log('着地');
+	        }
 	        return {
 	          v: _immutable2.default.fromJS(state).updateIn(['block', 'X'], function (v) {
 	            return !(action.x && moveValidX) ? v : v + action.x;
@@ -401,13 +407,19 @@
 	var storeSubscribePool = [];
 	store.subscribe(function () {
 	  var state = store.getState();
-	  var block = state.block;
 	  // block.body.forEach(v => console.log(v))
 	  // console.log(`POS:(${block.X},${block.Y})`)
 	  storeSubscribePool.forEach(function (cb) {
 	    return cb(state);
 	  });
 	});
+	
+	var intervalByLevel = function intervalByLevel(cb) {
+	  var setLevel = function setLevel(level, cb) {
+	    //return () => clearIntrval(interval(cb, 1000 / level))
+	  };
+	  return setLevel(level, cb);
+	};
 
 /***/ },
 /* 3 */
