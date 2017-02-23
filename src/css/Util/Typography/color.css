@@ -1,0 +1,21 @@
+.color {
+  &-black { color: var(--color-black) };
+  &-blue { color: var(--color-blue) };
+  &-orange { color: var(--color-orange) };
+  &-gray { color: var(--color-gray) };
+  &-green { color: var(--color-green) };
+  &-red { color: var(--color-red) };
+  &-purple { color: var(--color-purple) };
+  &-blue-dark { color: var(--color-blue-dark) };
+  &-red-origin { color: var(--color-red-origin) };
+  &-cyan { color: var(--color-cyan) };
+  &-magenta { color: var(--color-magenta) };
+  &-white { color: var(--color-white) };
+
+  &-base { color: var(--color-base); }
+  &-primary { color: var(--color-primary); }
+  &-secondary { color: var(--color-secondary); }
+  &-in-primary { color: var(--color-in-primary); }
+  &-accent { color: var(--color-accent); }
+  &-disabled { color: var(--color-accent); }
+}

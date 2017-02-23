@@ -1,0 +1,180 @@
+
+:root {
+  --ico-size-1: var(--grid-size)px;
+  --ico-size-2: calc(var(--grid-min-size) * 2)px;
+  --ico-size-3: calc(var(--grid-min-size) * 3)px;
+  --ico-size-4: calc(var(--grid-min-size) * 4)px;
+  --ico-size-5: calc(var(--grid-min-size) * 5)px;
+  --ico-size-6: calc(var(--grid-min-size) * 6)px;
+  --ico-size-7: calc(var(--grid-min-size) * 7)px;
+  --ico-size-8: calc(var(--grid-min-size) * 8)px;
+
+  --ico-color-black: #000;
+  --ico-color-white: #fff;
+  --ico-color-orange: #ff9500;
+  --ico-color-blue: #007aff;
+  --ico-color-blue-dark: #3e70a7; 
+  --ico-color-cyan: #289dfd;
+  --ico-color-green: #4cd964;
+  --ico-color-red: #ff3b30;
+  --ico-color-red-origin: #ff0000;
+  --ico-color-magenta: #ff2d55;
+  --ico-color-purple: #5856d6;
+  --ico-color-gray: #8e8e93;
+  --ico-color-gray: #8e8e93;
+}
+
+:root {
+  --ico-color-modif: {
+    &.-color {
+      &-black {
+        color: var(--ico-color-black);
+        background-color: var(--ico-color-black);
+        &:after { border-color: var(--ico-color-black); }
+      }
+      &-white {
+        color: var(--ico-color-white);
+        background-color: var(--ico-color-white);
+        &:after { border-color: var(--ico-color-white); }
+      }
+      &-orange {
+        color: var(--ico-color-orange);
+        background-color: var(--ico-color-orange);
+        &:after { border-color: var(--ico-color-orange); }
+      }
+      &-blue {
+        color: var(--ico-color-blue);
+        background-color: var(--ico-color-blue);
+        &:after { border-color: var(--ico-color-blue); }
+      }
+      &-cyan {
+        color: var(--ico-color-cyan);
+        background-color: var(--ico-color-cyan);
+        &:after { border-color: var(--ico-color-cyan); }
+      };
+      &-blue-dark {
+        color: var(--ico-color-blue-dark);
+        background-color: var(--ico-color-blue-dark);
+        &:after { border-color: var(--ico-color-blue-dark); }
+      }
+      &-green {
+        color: var(--ico-color-green);
+        background-color: var(--ico-color-green);
+        &:after { border-color: var(--ico-color-green); }
+      }
+      &-red {
+        color: var(--ico-color-red);
+        background-color: var(--ico-color-red);
+        &:after { border-color: var(--ico-color-red); }
+      }
+      &-red-origin {
+        color: var(--ico-color-red-origin);
+        background-color: var(--ico-color-red-origin);
+        &:after { border-color: var(--ico-color-red-origin); }
+      }
+      &-magenta {
+        color: var(--ico-color-magenta);
+        background-color: var(--ico-color-magenta);
+        &:after { border-color: var(--ico-color-magenta); }
+      };
+      &-purple {
+        color: var(--ico-color-purple);
+        background-color: var(--ico-color-purple);
+        &:after { border-color: var(--ico-color-purple); }
+      }
+      &-gray {
+        color: var(--ico-color-gray);
+        background-color: var(--ico-color-gray);
+        &:after { border-color: var(--ico-color-gray); }
+      };
+    }
+  }
+}
+
+.ico {
+  display: inline-block;
+  vertical-align: middle;
+  width:var(--ico-size-2); height:var(--ico-size-2);
+  &.-size {
+    &-1 { width:var(--ico-size-1); height:var(--ico-size-1); }
+    &-2 { width:var(--ico-size-2); height:var(--ico-size-2); }
+    &-3 { width:var(--ico-size-3); height:var(--ico-size-3); }
+    &-4 { width:var(--ico-size-4); height:var(--ico-size-4); }
+    &-5 { width:var(--ico-size-5); height:var(--ico-size-5); }
+    &-6 { width:var(--ico-size-6); height:var(--ico-size-6); }
+    &-7 { width:var(--ico-size-7); height:var(--ico-size-7); }
+    &-8 { width:var(--ico-size-8); height:var(--ico-size-8); }
+    &-1hf { width:calc(var(--ico-size-1) / 2); height:var(--ico-size-1); }
+    &-2hf { width:calc(var(--ico-size-2) / 2); height:var(--ico-size-2); }
+    &-3hf { width:calc(var(--ico-size-3) / 2); height:var(--ico-size-3); }
+    &-4hf { width:calc(var(--ico-size-4) / 2); height:var(--ico-size-4); }
+    &-5hf { width:calc(var(--ico-size-5) / 2); height:var(--ico-size-5); }
+    &-6hf { width:calc(var(--ico-size-6) / 2); height:var(--ico-size-6); }
+    &-7hf { width:calc(var(--ico-size-7) / 2); height:var(--ico-size-7); }
+    &-8hf { width:calc(var(--ico-size-8) / 2); height:var(--ico-size-8); }
+  }
+
+  &_body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    }
+    &.-type {
+      &-default {
+        background-color: transparent !important;
+      }
+      &-box {
+        color: var(--color-white) !important;
+        background-color: var(--ico-color-black);
+        border-radius: 31.445312%;
+      }
+      &-sphere {
+        color: var(--color-white) !important;
+        background-color: var(--ico-color-black);
+        border-radius: 50%;
+      }
+      &-circle {
+        border-radius: 50%;
+        background-color: transparent !important;
+        &:after {
+          border: 2px solid var(--color-black);
+          border-radius: 50%;
+        }
+      }
+    }
+    @apply --ico-color-modif;
+  }
+
+  &_core {
+    width: 100%;
+    height: 100%;
+    &.-type {
+      &-box {
+        width: 75%;
+        height: 75%;
+      }
+      &-sphere {
+        width: 75%;
+        height: 75%;
+      }
+      &-circle {
+        width: 75%;
+        height: 75%;
+      }
+    }
+
+  }
+
+
+}

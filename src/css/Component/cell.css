@@ -1,0 +1,20 @@
+:root {
+  --c-cell-border-width: 1px;
+  --c-cell-border-color: var(--color-dividers);
+  --c-cell-border: var(--c-cell-border-width) solid var(--color-dividers);
+}
+
+.c-cell {
+  &_list {
+    margin-top: -var(--c-cell-border-width);
+  }
+  &_area {
+  }
+  &_body {
+    border-top: var(--c-cell-border);
+    border-bottom: var(--c-cell-border);
+  }
+  &_item {
+    padding: 16px 0;
+  }
+}

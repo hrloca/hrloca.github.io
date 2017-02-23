@@ -4,96 +4,107 @@ import WebpackBuildNotifierPlugin from 'webpack-build-notifier'
 import CommonsChunkPlugin from 'webpack/lib/optimize/CommonsChunkPlugin'
 
 const TARGET = process.env.npm_lifecycle_event
+const isDev = TARGET === 'watch'
 
 /*
- * js
+ * js option
  **************************************************/
-const devPlugins = [
-  new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"development"' } }),
-  new WebpackBuildNotifierPlugin(),
-];
 
-const prdPlugins = [
-  new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }),
-  new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
-];
-
-const BUILD_MAP = {
-  'watch': {
-    plugins: devPlugins,
-  },
-  'build': {
-    plugins: prdPlugins,
-  },
-};
-
-const js = {
+const js = jsBuildOptionTemplate({
   entry: {
-    app: `./src/js/main.js`,
+    'app': './src/js/main.js',
+    'vendor': ['react', 'redux', 'react-redux', 'react-dom', 'immutable'],
   },
-  output: {
-    path: `./dist/js/`,
-    filename: `[name].js`,
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel',
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader"
-      },
-      { test: /\.(png|svg)$/i, loaders: [ 'url?name=[path][name].[ext]' ] },
-    ]
-  },
-  plugins: []
-    .concat(BUILD_MAP[TARGET].plugins)
-    //.concat([ new CommonsChunkPlugin({ name: 'common' }) ])
-}
+  outputPath: './docs/js/',
+})
+
 
 /*
- * css
+ * css option
  **************************************************/
-const css = {
+const css = cssBuildOptionTemplate({
   entry: {
-    app: `./src/css/app.css`,
+    'app': './src/css/main.css',
   },
-  output: {
-    path: `./dist/css/`,
-    filename: `[name].css`,
-  },
-  module: {
-    loaders: [
-      { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader') },
-      { test: /\.(svg)$/i, loaders: [ 'file-loader?name=./../assets/svg/[name].[ext]', 'svgo-loader' ] },
-      { test: /\.(jpe?g|png|gif)$/i, loaders: [ 'file-loader?name=./../assets/img/[name].[ext]'] },
-    ]
-  },
-  plugins: [
-    new ExtractTextPlugin(`[name].css`),
-    new WebpackBuildNotifierPlugin(),
-  ],
-  postcss: (webpack) => {
-    let config = [];
-    config = config.concat([
-      require('postcss-import')({ addDependencyTo: webpack }),
-      require('postcss-cssnext')({ browsers: [ 'last 3 versions' ]}),
-      require('postcss-reporter'),
-      require('stylelint'),
-      require('postcss-extend'),
-    ]);
-    switch (TARGET) {
-      case 'watch':
-        return config
-      case 'build':
-        config.push(require('cssnano'));
-        return config
-    }
+  outputPath: './docs/css/',
+  svgPath: './../../assets/svg/',
+  imgPath: './../../assets/img/',
+  browsers: ['last 1 versions']
+})
+
+export default [ js, css ]
+
+
+//////////////////////////////////////////////////
+
+
+function jsBuildOptionTemplate({entry, outputPath}) {
+  return {
+    devtool: 'source-map',
+    entry,
+    output: {
+      path: outputPath,
+      filename: '[name].js',
+    },
+    module: {
+      rules: [
+        { test: /\.js$/, exclude: [/node_modules/, /sw.js/], loader: 'babel-loader' },
+        { test: /\.js$/, exclude: /node_modules/, loader: "eslint-loader" },
+        { test: /\.(png|svg)$/i, loaders: [ 'url-loader?name=[name].[ext]' ] },
+      ]
+    },
+    plugins: []
+      .concat(isDev ? [
+        new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"development"' } }),
+        new WebpackBuildNotifierPlugin(),
+      ] : [
+        new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }),
+        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+      ])
+      .concat([ new CommonsChunkPlugin({ name: 'vendor' }) ])
   }
 }
 
-export default [ js, css ]
+function cssBuildOptionTemplate({entry, outputPath, svgPath, imgPath, browsers}) {
+  return {
+    entry: entry,
+    output: {
+      'path': outputPath,
+      'filename': '[name].css',
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use:[
+              'css-loader',
+              'postcss-loader',
+            ]
+          })
+        },
+        { test: /\.(svg)$/i, loaders: [ 'file-loader?name=' + svgPath + '[name].[ext]', 'svgo-loader' ] },
+        { test: /\.(jpe?g|png|gif)$/i, loaders: [ 'file-loader?name=' + imgPath + '[name].[ext]'] },
+      ],
+    },
+    plugins: [
+      new ExtractTextPlugin('[name].css'),
+      new WebpackBuildNotifierPlugin(),
+      new webpack.LoaderOptionsPlugin({
+        options: {
+          postcss: [
+            require('postcss-import'),
+            require('postcss-cssnext')({
+              warnForDuplicates: false,
+              browsers,
+            }),
+            require('postcss-reporter'),
+            require('stylelint'),
+            require('postcss-extend'),
+          ].concat(isDev ? [] : [require('cssnano')])
+        }
+      }),
+    ],
+  }
+}

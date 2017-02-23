@@ -1,0 +1,18 @@
+.ui-searchbar {
+  flex-grow: 1;
+  width: 100%;
+  background-color: var(--color-ui-background);
+  padding: var(--grid-min-size)px;
+
+  &-form {
+    display: flex;
+    flex-grow: 1;
+  }
+
+  &-body {
+    flex-grow: 1;
+    padding: calc(var(--grid-min-size) / 2)px var(--grid-min-size)px;
+    background-color: var(--color-gray-searchbar);
+    border-radius: var(--radius-input);
+  }
+}

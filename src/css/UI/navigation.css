@@ -1,0 +1,46 @@
+.ui-navigation {
+
+  &-screen {
+    overflow: hidden;
+    @apply --layout-view;
+    z-index: 1;
+  }
+
+  &-view {
+    @apply --layout-view;
+    background-color: #ddd;
+    transform: translate3d(100%,0,0);
+    &:nth-of-type(1) { background-color: color(#f00 alpha(.1)); }
+    &:nth-of-type(2) { background-color: color(#ff0 alpha(.1)); }
+    &:nth-of-type(3) { background-color: color(#0f0 alpha(.1)); }
+    &:nth-of-type(4) { background-color: color(#000 alpha(.1)); }
+    &:nth-of-type(5) { background-color: color(#0ff alpha(.1)); }
+    &.-current {
+      transform: translate3d(0,0,0);
+    }
+    &.-next {
+      animation: UI-NAVIGATION-VIEW-NEXT .5s ease forwards;
+    }
+    &.-prev {
+      animation: UI-NAVIGATION-VIEW-PREV .5s ease forwards;
+    }
+  }
+}
+
+@keyframes UI-NAVIGATION-VIEW-NEXT {
+  0% {
+    transform: translate3d(100%,0,0);
+  }
+  100% {
+    transform: translate3d(0,0,0);
+  }
+}
+
+@keyframes UI-NAVIGATION-VIEW-PREV {
+  0% {
+    transform: translate3d(0,0,0);
+  }
+  100% {
+    transform: translate3d(100%,0,0);
+  }
+}

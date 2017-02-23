@@ -1,0 +1,7 @@
+.m {
+  @apply --space-impl;
+}
+
+.p {
+  @apply --innerspace-impl:
+}

@@ -2,48 +2,68 @@
  * config
  * */
 
-/* font */
+/*
+ * color
+ * -------------------------------------------------- */
+
 :root {
-  --base-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', '游ゴシック Medium', 'メイリオ', meiryo, sans-serif;
+  --color-black: #000;
+  --color-white: #fff;
+  --color-orange: #ff9500;
+  --color-blue: #007aff;
+  --color-blue-dark: #3e70a7; 
+  --color-cyan: #289dfd;
+  --color-green: #4cd964;
+  --color-magenta: #ff2d55;
+  --color-red: #ff3b30;
+  --color-red-origin: #ff0000;
+  --color-purple: #5856d6;
+
+
+  --color-gray: #8e8e93; /* ico, secndary text, */
+  --color-gray-light: #c5c5c5; /* text disabled */
+  --color-gray-extralight: #f8f8f8; /* ui background */
+
+  --color-gray-ico: #d1d0ce; /* ico */
+  --color-gray-frame: #c9c9ce; /* ui frame */
+
+  --color-gray-dividers: #a7a7aa; /* devider */
+  --color-gray-dividers-thin: #c8c7cc; /* devider */
+  --color-gray-btn: #adb3bd; /* keybord button */
+
+  --color-gray-: #f4f4f9; /* ui background */
+  --color-gray-: #f8f8f8; /* ui background */
+  --color-gray-: #d2d6db; /* keybord background */
+  --color-gray-searchbar: #e5e5e7; /* keybord background */
+
+
+  --color-base: var(--color-black);
+  --color-primary: var(--color-blue);
+  --color-in-primary: var(--color-white);
+  --color-secondary: var(--color-gray);
+  --color-accent: var(--color-primary);
+  --color-disabled: var(--color-gray-dividers-thin);
+  --color-dividers: var(--color-gray-dividers-thin);
+  --color-dividers-thin: var(--color-gray-dividers-thin);
+  --color-frame: var(--color-gray);
+  --color-ui-background: var(--color-gray-extralight);
 }
 
-/* color */
+/*
+ * typography
+ * -------------------------------------------------- */
 :root {
-  --base-color: #666;
-  --text-color: #666;
-  --secondary-text-color: #ccc;
-  --accent-color: #f48;
-  --hint-text-color : #e41f35;
-  --disabled-color: #ddd;
-  --dividers: #ccc;
-  --thin-dividers: #eee;
-  --primary-color: #48f;
-  --primary-color-in-text-color: #fff;
+  --font-family-default: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', '游ゴシック Medium', 'メイリオ', meiryo, sans-serif;
 
-  --panel-primary-color: #F0F0F0;
-  --aside-color: #f0ede8;
-  --share-color: #f9f7f3;
-}
+  --font-size-1: 0.625rem; /* 10 */
+  --font-size-2: 0.75rem; /* 12 */
+  --font-size-3: 0.875rem; /* 14 */
+  --font-size-4: 1rem; /* 16 */
+  --font-size-5: 1.125rem; /* 18 */
+  --font-size-6: 1.25rem; /* 20 */
+  --font-size-7: 1.375rem; /* 22 */
+  --font-size-8: 1.5rem; /* 24 */
 
-/* client */
-:root {
-  --primary-client-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
-  --primary-border-color: var(--dividers);
-  --content-width: 828px;
-  --content-single-width: 980px;
-  --article-content-width: 810px;
-  --header-height: 72px;
-}
-
-/* shadow */
-:root {
-  --shadow-S: 0px 0px 2px 1px rgba(50, 50, 50, 0.2);
-  --shadow-M: 0px 0px 4px 2px rgba(50, 50, 50, 0.2);
-  --shadow-L: 0px 0px 6px 3px rgba(50, 50, 50, 0.2);
-}
-
-/* font */
-:root {
   --font-size-XS: 0.625rem; /* 10 */
   --font-size-S: 0.75rem; /* 12 */
   --font-size-M: 0.875rem; /* 14 */
@@ -52,17 +72,86 @@
   --font-size-XXL: 1.5rem; /* 24 */
 }
 
-/* image */
+/*
+ * layout
+ * -------------------------------------------------- */
+@custom-media --viewport-S (min-width: 375px);
+@custom-media --viewport-M (min-width: 768px);
+@custom-media --viewport-L (min-width: 1024px);
+
 :root {
-  --img-size-XS: 120px;
-  --img-size-S: 140px;
-  --img-size-M: 244px;
-  --img-size-L: 308px;
+  --grid-base-width: 960;
+  --grid-min-size: 8;
+  --grid-size: calc(var(--grid-min-size) * 2);
+  --grid-max-colmun: 12;
+  --grid-min-colmun-width: calc(--grid-base-width / --grid-max-colmun);
 }
 
-/* easing */
+@custom-selector :--grid-breakpoint -sm, -md, -lg;
+@custom-selector :--grid-num -1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12;
+
 :root {
+  --colum-1: calc(100% / var(--grid-max-colmun) * 1);
+  --colum-2: calc(100% / var(--grid-max-colmun) * 2);
+  --colum-3: calc(100% / var(--grid-max-colmun) * 3);
+  --colum-4: calc(100% / var(--grid-max-colmun) * 4);
+  --colum-5: calc(100% / var(--grid-max-colmun) * 5);
+  --colum-6: calc(100% / var(--grid-max-colmun) * 6);
+  --colum-7: calc(100% / var(--grid-max-colmun) * 7);
+  --colum-8: calc(100% / var(--grid-max-colmun) * 8);
+  --colum-9: calc(100% / var(--grid-max-colmun) * 9);
+  --colum-10: calc(100% / var(--grid-max-colmun) * 10);
+  --colum-11: calc(100% / var(--grid-max-colmun) * 11);
+  --colum-12: calc(100% / var(--grid-max-colmun) * 12);
+}
+
+:root {
+  --space-XS: calc(var(--grid-size) / 4)px;
+  --space-S: calc(var(--grid-size) / 2)px;
+  --space-M: var(--grid-size)px;
+  --space-L: calc(var(--grid-size) * 2)px;
+  --space-XL: calc(var(--grid-size) * 4)px;
+}
+
+/*
+ * interaction
+ * -------------------------------------------------- */
+:root {
+;
   --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  --ease-progress: cubic-bezier(0, 0, 0, 1);
+}
+
+/*
+ * decoration
+ * -------------------------------------------------- */
+:root {
+  --shadow-S: 0px 0px 2px 1px rgba(50, 50, 50, 0.2);
+  --shadow-M: 0px 0px 4px 2px rgba(50, 50, 50, 0.2);
+  --shadow-L: 0px 0px 6px 3px rgba(50, 50, 50, 0.2);
+
+  --radius-card: 24px;
+  --radius: 31.445312%;
+  --radius-input: 4px;
+}
+
+/*
+ * impl
+ * -------------------------------------------------- */
+:root {
+  --divider: .99px solid var(--color-dividers);
+  --divider-thin: .99px solid var(--color-dividers-thin);
+}
+
+:root {
+  --layout-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 }

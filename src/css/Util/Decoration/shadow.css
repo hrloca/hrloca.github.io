@@ -1,0 +1,15 @@
+.shadow {
+  &-1 {
+    z-index: 1;
+    box-shadow: var(--shadow-S);
+  }
+  &-2 {
+    z-index: 1;
+    box-shadow: var(--shadow-M);
+  }
+  &-3 {
+    z-index: 1;
+    box-shadow: var(--shadow-L);
+  }
+}
+

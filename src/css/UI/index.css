@@ -1,0 +1,89 @@
+:root {
+
+  --view-modif {
+
+    &.-fit {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    &.-absolute { position: absolute; }
+    &.-fixed { position: fixed; }
+
+    &.-fix {
+      &-bottom { top: auto; }
+      &-top { bottom: auto; }
+      &-right { left: auto; }
+      &-left { right: auto; }
+    }
+
+    &.-bottom { &-free { bottom: auto; } }
+    &.-top { &-free { top: auto; } }
+    &.-right { &-free { right: auto; } }
+    &.-left { &-free { left: auto; } }
+
+    &.-bd {
+      &-bottom { border-bottom: var(--divider); }
+      &-top { border-top: var(--divider); }
+      &-left { border-left: var(--divider); }
+      &-right { border-right: var(--divider); }
+    }
+
+    &.-lv {
+      &1 { z-index: 1; }
+      &2 { z-index: 2; }
+      &3 { z-index: 3; }
+      &4 { z-index: 4; }
+      &5 { z-index: 5; }
+    }
+
+  }
+
+  --view {
+    position: fixed;
+    display: flex;
+    min-width: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+
+    flex-direction: column;
+
+    @apply --view-modif;
+  }
+
+  --item-modif {
+    @apply --view-modif;
+  }
+
+  --item {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    @apply --item-modif;
+  }
+}
+
+[class^="ui-"] {
+  @apply --flex-modif;
+  @apply --flex-item-modif;
+}
+
+
+.ui-view {
+  @apply --view;
+}
+
+.ui-item{
+  @apply --item;
+}
+
+.ui-subview {
+  position: absolute;
+}

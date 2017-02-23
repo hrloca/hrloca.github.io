@@ -1,0 +1,36 @@
+
+/*
+ * bar
+ * --------------------------------------------------*/
+.ui-bar {
+
+  &, &-group, &-item, &-btn-item {
+    align-items: center;
+    line-height: 1;
+    vertical-align: middle;
+    text-align: center;
+    justify-content: space-around;
+  }
+
+  & {
+    min-height: calc(var(--grid-min-size) * 6)px;
+    padding: calc(var(--grid-min-size) / 2)px var(--grid-min-size)px;
+    flex-wrap: wrap;
+  }
+
+  &-group {
+    flex-grow: 1;
+    justify-content: flex-start;
+  }
+
+  &-item {
+    flex-grow: 1;
+    padding: calc(var(--grid-min-size) / 2)px;
+  }
+
+  &-btn-item {
+    flex-grow: 1;
+    cursor: pointer;
+    padding: calc(var(--grid-min-size) / 2)px;
+  }
+}

@@ -1,0 +1,22 @@
+:root {
+  --btn-shadow: 0px 1px 0px 0px color(var(--color-gray-dividers));
+}
+
+.btn {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+
+  box-shadow: var(--btn-shadow);
+  font-size: var(--font-size-S);
+  border-radius: 4px;
+  border-radius: 4px;
+  padding: calc(var(--grid-min-size) / 2)px var(--grid-min-size)px;
+  background-color: var(--color-white);
+
+  &.-min {
+    width: auto;
+  }
+}

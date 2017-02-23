@@ -1,0 +1,18 @@
+@custom-selector :--heading-level 1, 2, 3, 4, 5;
+
+:root {
+  --heading-style: {
+    &1 { font-size: var(--font-size-XXL); }
+    &2 { font-size: var(--font-size-XL); }
+    &3 { font-size: var(--font-size-L); }
+    &4 { font-size: var(--font-size-M); }
+    &5 { font-size: var(--font-size-S); }
+  }
+}
+
+.h {
+  &:--heading-level {
+    font-weight: bold;
+  }
+  @apply --heading-style;
+}

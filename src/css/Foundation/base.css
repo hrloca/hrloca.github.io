@@ -1,26 +1,26 @@
 /*
  * base
  * ----------------------------------------------------------------- */
-*, *:before, *:after {
+:root {
+  background-color: var(--color-ui-background);
   box-sizing: border-box;
-}
-
-html {
-  overflow: hidden;
-}
-
-body{
-  font-family: var(--base-font-family);
-  color: var(--text-color);
+  cursor: default;
+  font-family: var(--font-family-default);
   font-size: var(--font-size-M);
-  width: 100%;
-  word-wrap: break-word;
+  color: var(--color-base);
   overflow-wrap: break-word;
-  overflow: hidden;
+  word-wrap: break-word;
+}
+
+*, *:after, *:before {
+  min-width: 0;
+}
+
+body, html{
 }
 
 a {
-  color: var(--text-color);
+  color: var(--color-base);
 }
 
 input,input:focus {
@@ -30,4 +30,3 @@ input,input:focus {
 ul, li{
   list-style-type: none;
 }
-

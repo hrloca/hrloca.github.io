@@ -1,0 +1,334 @@
+:root {
+  --flex-dir {
+    &-row { flex-direction: row; }
+    &-row-rev { flex-direction: row-reverse; }
+    &-col { flex-direction: column; }
+    &-col-rev { flex-direction: column-reverse; }
+  }
+  --flex-wrap {
+    flex-wrap: wrap;
+    &-no { flex-wrap: nowrap; }
+    &-reverse { flex-wrap: wrap-reverse; }
+  }
+  --flex-justify-content {
+    &-start { justify-content: flex-start; }
+    &-end { justify-content: flex-end; }
+    &-center { justify-content: center; }
+    &-between { justify-content: space-between; }
+    &-around { justify-content: space-around; }
+  }
+  --flex-align-items {
+    &-start { align-items: flex-start; }
+    &-end { align-items: flex-end ; }
+    &-center { align-items: center; }
+    &-baseline { align-items: baseline; }
+    &-stretch { align-items: stretch; }
+  }
+  --flex-align-content {
+    &-start { align-content: flex-start; }
+    &-end { align-content: flex-end ; }
+    &-center { align-content: center; }
+    &-between { align-content: space-between ; }
+    &-around { align-content: space-around; }
+    &-stretch { align-content: space-stretch; }
+  }
+  --flex-item-grow {
+    flex-grow: 1;
+    flex-shrink: 1;
+    &-0 { flex-grow: 0; }
+  }
+  --flex-item-shrink {
+    flex-shrink: 1;
+    &-0 { flex-shrink: 0; }
+  }
+  --flex-item-align-self {
+    &-start { align-self: flex-start; }
+    &-end { align-self: flex-end ; }
+    &-center { align-self: center; }
+    &-baseline { align-self: baseline; }
+    &-stretch { align-self: stretch; }
+  }
+
+  --flex-item-grid {
+    &-1 { max-width: var(--colum-1); flex-basis: var(--colum-1); }
+    &-2 { max-width: var(--colum-2); flex-basis: var(--colum-2); }
+    &-3 { max-width: var(--colum-3); flex-basis: var(--colum-3); }
+    &-4 { max-width: var(--colum-4); flex-basis: var(--colum-4); }
+    &-5 { max-width: var(--colum-5); flex-basis: var(--colum-5); }
+    &-6 { max-width: var(--colum-6); flex-basis: var(--colum-6); }
+    &-7 { max-width: var(--colum-7); flex-basis: var(--colum-7); }
+    &-8 { max-width: var(--colum-8); flex-basis: var(--colum-8); }
+    &-9 { max-width: var(--colum-9); flex-basis: var(--colum-9); }
+    &-10 { max-width: var(--colum-10); flex-basis: var(--colum-10); }
+    &-11 { max-width: var(--colum-11); flex-basis: var(--colum-11); }
+    &-12 { max-width: var(--colum-12); flex-basis: var(--colum-12); }
+  }
+}
+
+:root {
+  --flex-modif {
+    &.-dir {
+      @apply --flex-dir;
+      @media (--viewport-S) { &-sm { @apply --flex-dir } }
+      @media (--viewport-M) { &-md { @apply --flex-dir } }
+      @media (--viewport-L) { &-lg { @apply --flex-dir } }
+    }
+    &.-wrap {
+      @apply --flex-wrap;
+      @media (--viewport-S) { &-sm { @apply --flex-wrap } }
+      @media (--viewport-M) { &-md { @apply --flex-wrap } }
+      @media (--viewport-L) { &-lg { @apply --flex-wrap } }
+    }
+    &.-justify {
+      @apply --flex-justify-content;
+      @media (--viewport-S) { &-sm { @apply --flex-justify-content } }
+      @media (--viewport-M) { &-md { @apply --flex-justify-content } }
+      @media (--viewport-L) { &-lg { @apply --flex-justify-content } }
+    }
+    &.-align-items {
+      @apply --flex-align-items;
+      @media (--viewport-S) { &-sm { @apply --flex-align-items } }
+      @media (--viewport-M) { &-md { @apply --flex-align-items } }
+      @media (--viewport-L) { &-lg { @apply --flex-align-items } }
+    }
+    &.-align-content {
+      @apply --flex-align-content;
+      @media (--viewport-S) { &-sm { @apply --flex-align-content } }
+      @media (--viewport-M) { &-md { @apply --flex-align-content } }
+      @media (--viewport-L) { &-lg { @apply --flex-align-content } }
+    }
+  }
+
+  --flex-item-modif {
+    &.-grow {
+      @apply --flex-item-grow;
+      @media (--viewport-S) { &-sm { @apply --flex-item-grow } }
+      @media (--viewport-M) { &-md { @apply --flex-item-grow } }
+      @media (--viewport-L) { &-lg { @apply --flex-item-grow } }
+    }
+    &.-shrink {
+      @apply --flex-item-shrink;
+      @media (--viewport-S) { &-sm { @apply --flex-item-shrink } }
+      @media (--viewport-M) { &-md { @apply --flex-item-shrink } }
+      @media (--viewport-L) { &-lg { @apply --flex-item-shrink } }
+    }
+    &.-align-self {
+      @apply --flex-item-align-self;
+      @media (--viewport-S) { &-sm { @apply --flex-item-align-self } }
+      @media (--viewport-M) { &-md { @apply --flex-item-align-self } }
+      @media (--viewport-L) { &-lg { @apply --flex-item-align-self } }
+    }
+    &.-grid {
+      @apply --flex-item-grid;
+      @media (--viewport-S) { &-sm { @apply --flex-item-grid } }
+      @media (--viewport-M) { &-md { @apply --flex-item-grid } }
+      @media (--viewport-L) { &-lg { @apply --flex-item-grid } }
+    }
+  }
+}
+
+:root {
+  --space-style: {
+    margin:var(--space-M);
+    &-XS { margin:var(--space-XS);}
+    &-S { margin:var(--space-S);}
+    &-M { margin:var(--space-M);}
+    &-L { margin:var(--space-L);}
+    &-XL { margin:var(--space-XL);}
+  }
+  --space-y-style: {
+    margin-top:var(--space-M);margin-bottom:var(--space-M);
+    &-XS { margin-top:var(--space-XS);margin-bottom:var(--space-XS);}
+    &-S { margin-top:var(--space-S);margin-bottom:var(--space-S);}
+    &-M { margin-top:var(--space-M);margin-bottom:var(--space-M);}
+    &-L { margin-top:var(--space-L);margin-bottom:var(--space-L);}
+    &-XL { margin-top:var(--space-XL);margin-bottom:var(--space-XL);}
+  }
+  --space-x-style: {
+    margin-left:var(--space-M);margin-right:var(--space-M);
+    &-XS { margin-left:var(--space-XS);margin-right:var(--space-XS);}
+    &-S { margin-left:var(--space-S);margin-right:var(--space-S);}
+    &-M { margin-left:var(--space-M);margin-right:var(--space-M);}
+    &-L { margin-left:var(--space-L);margin-right:var(--space-L);}
+    &-XL { margin-left:var(--space-XL);margin-right:var(--space-XL);}
+  }
+  --space-t-style: {
+    margin-top:var(--space-M);
+    &-XS { margin-top:var(--space-XS);}
+    &-S { margin-top:var(--space-S);}
+    &-M { margin-top:var(--space-M);}
+    &-L { margin-top:var(--space-L);}
+    &-XL { margin-top:var(--space-XL);}
+  }
+  --space-b-style: {
+    margin-bottom:var(--space-M);
+    &-XS { margin-bottom:var(--space-XS);}
+    &-S { margin-bottom:var(--space-S);}
+    &-M { margin-bottom:var(--space-M);}
+    &-L { margin-bottom:var(--space-L);}
+    &-XL { margin-bottom:var(--space-XL);}
+  }
+  --space-l-style: {
+    margin-left:var(--space-M);
+    &-XS { margin-left:var(--space-XS);}
+    &-S { margin-left:var(--space-S);}
+    &-M { margin-left:var(--space-M);}
+    &-L { margin-left:var(--space-L);}
+    &-XL { margin-left:var(--space-XL);}
+  }
+  --space-r-style: {
+    margin-right:var(--space-M);
+    &-XS { margin-right:var(--space-XS);}
+    &-S { margin-right:var(--space-S);}
+    &-M { margin-right:var(--space-M);}
+    &-L { margin-right:var(--space-L);}
+    &-XL { margin-right:var(--space-XL);}
+  }
+}
+
+:root {
+  --innerspace-style: {
+    padding:var(--space-M);
+    &-XS { padding:var(--space-XS);}
+    &-S { padding:var(--space-S);}
+    &-M { padding:var(--space-M);}
+    &-L { padding:var(--space-L);}
+    &-XL { padding:var(--space-XL);}
+  }
+  --innerspace-y-style: {
+    padding-top:var(--space-M);padding-bottom:var(--space-M);
+    &-XS { padding-top:var(--space-XS);padding-bottom:var(--space-XS);}
+    &-S { padding-top:var(--space-S);padding-bottom:var(--space-S);}
+    &-M { padding-top:var(--space-M);padding-bottom:var(--space-M);}
+    &-L { padding-top:var(--space-L);padding-bottom:var(--space-L);}
+    &-XL { padding-top:var(--space-XL);padding-bottom:var(--space-XL);}
+  }
+  --innerspace-x-style: {
+    padding-left:var(--space-M);padding-right:var(--space-M);
+    &-XS { padding-left:var(--space-XS);padding-right:var(--space-XS);}
+    &-S { padding-left:var(--space-S);padding-right:var(--space-S);}
+    &-M { padding-left:var(--space-M);padding-right:var(--space-M);}
+    &-L { padding-left:var(--space-L);padding-right:var(--space-L);}
+    &-XL { padding-left:var(--space-XL);padding-right:var(--space-XL);}
+  }
+  --innerspace-t-style: {
+    padding-top:var(--space-M);
+    &-XS { padding-top:var(--space-XS);}
+    &-S { padding-top:var(--space-S);}
+    &-M { padding-top:var(--space-M);}
+    &-L { padding-top:var(--space-L);}
+    &-XL { padding-top:var(--space-XL);}
+  }
+  --innerspace-b-style: {
+    padding-bottom:var(--space-M);
+    &-XS { padding-bottom:var(--space-XS);}
+    &-S { padding-bottom:var(--space-S);}
+    &-M { padding-bottom:var(--space-M);}
+    &-L { padding-bottom:var(--space-L);}
+    &-XL { padding-bottom:var(--space-XL);}
+  }
+  --innerspace-l-style: {
+    padding-left:var(--space-M);
+    &-XS { padding-left:var(--space-XS);}
+    &-S { padding-left:var(--space-S);}
+    &-M { padding-left:var(--space-M);}
+    &-L { padding-left:var(--space-L);}
+    &-XL { padding-left:var(--space-XL);}
+  }
+  --innerspace-r-style: {
+    padding-right:var(--space-M);
+    &-XS { padding-right:var(--space-XS);}
+    &-S { padding-right:var(--space-S);}
+    &-M { padding-right:var(--space-M);}
+    &-L { padding-right:var(--space-L);}
+    &-XL { padding-right:var(--space-XL);}
+  }
+}
+
+:root {
+  --space-impl: {
+    @apply --space-style;
+    @media (--viewport-S) { &-sm { @apply --space-style; } }
+    @media (--viewport-M) { &-md { @apply --space-style; } }
+    @media (--viewport-L) { &-lg { @apply --space-style; } }
+    &y {
+      @apply --space-y-style;
+      @media (--viewport-S) { &-sm { @apply --space-y-style; } }
+      @media (--viewport-M) { &-md { @apply --space-y-style; } }
+      @media (--viewport-L) { &-lg { @apply --space-y-style; } }
+    }
+    &x {
+      @apply --space-x-style;
+      @media (--viewport-S) { &-sm { @apply --space-x-style } }
+      @media (--viewport-M) { &-md { @apply --space-x-style } }
+      @media (--viewport-L) { &-lg { @apply --space-x-style } }
+    }
+    &t {
+      @apply --space-t-style;
+      @media (--viewport-S) { &-sm { @apply --space-t-style } }
+      @media (--viewport-M) { &-md { @apply --space-t-style } }
+      @media (--viewport-L) { &-lg { @apply --space-t-style } }
+    }
+    &b {
+      @apply --space-b-style;
+      @media (--viewport-S) { &-sm { @apply --space-b-style } }
+      @media (--viewport-M) { &-md { @apply --space-b-style } }
+      @media (--viewport-L) { &-lg { @apply --space-b-style } }
+    }
+    &l {
+      @apply --space-l-style;
+      @media (--viewport-S) { &-sm { @apply --space-l-style } }
+      @media (--viewport-M) { &-md { @apply --space-l-style } }
+      @media (--viewport-L) { &-lg { @apply --space-l-style } }
+    }
+    &r {
+      @apply --space-r-style;
+      @media (--viewport-S) { &-sm { @apply --space-r-style } }
+      @media (--viewport-M) { &-md { @apply --space-r-style } }
+      @media (--viewport-L) { &-lg { @apply --space-r-style } }
+    }
+  }
+
+  --innerspace-impl: {
+    @apply --innerspace-style;
+    @media (--viewport-S) { &-sm { @apply --innerspace-style; } }
+    @media (--viewport-M) { &-md { @apply --innerspace-style; } }
+    @media (--viewport-L) { &-lg { @apply --innerspace-style; } }
+    &y {
+      @apply --innerspace-y-style;
+      @media (--viewport-S) { &-sm { @apply --innerspace-y-style; } }
+      @media (--viewport-M) { &-md { @apply --innerspace-y-style; } }
+      @media (--viewport-L) { &-lg { @apply --innerspace-y-style; } }
+    }
+    &x {
+      @apply --innerspace-x-style;
+      @media (--viewport-S) { &-sm { @apply --innerspace-x-style } }
+      @media (--viewport-M) { &-md { @apply --innerspace-x-style } }
+      @media (--viewport-L) { &-lg { @apply --innerspace-x-style } }
+    }
+    &t {
+      @apply --innerspace-t-style;
+      @media (--viewport-S) { &-sm { @apply --innerspace-t-style } }
+      @media (--viewport-M) { &-md { @apply --innerspace-t-style } }
+      @media (--viewport-L) { &-lg { @apply --innerspace-t-style } }
+    }
+    &b {
+      @apply --innerspace-b-style;
+      @media (--viewport-S) { &-sm { @apply --innerspace-b-style } }
+      @media (--viewport-M) { &-md { @apply --innerspace-b-style } }
+      @media (--viewport-L) { &-lg { @apply --innerspace-b-style } }
+    }
+    &l {
+      @apply --innerspace-l-style;
+      @media (--viewport-S) { &-sm { @apply --innerspace-l-style } }
+      @media (--viewport-M) { &-md { @apply --innerspace-l-style } }
+      @media (--viewport-L) { &-lg { @apply --innerspace-l-style } }
+    }
+    &r {
+      @apply --innerspace-r-style;
+      @media (--viewport-S) { &-sm { @apply --innerspace-r-style } }
+      @media (--viewport-M) { &-md { @apply --innerspace-r-style } }
+      @media (--viewport-L) { &-lg { @apply --innerspace-r-style } }
+    }
+  }
+}
